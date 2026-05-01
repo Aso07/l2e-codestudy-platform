@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Stage 2 - L2E CodeStudy Platform</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+
+        .back-link {
+            color: #27ae60;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .lesson-box {
+            background: #eaf6ff;
+            border-left: 5px solid #3498db;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .lesson-box h2 { color: #2980b9; margin-top: 0; }
+
+        .lesson-box code {
+            background: #d6eaf8;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .lesson-box pre, .step-box pre {
+            background: #1e272e;
+            color: #00ff88;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+
+        .step-box {
+            background: white;
+            border-left: 5px solid #27ae60;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            display: none;
+        }
+
+        .step-box.active { display: block; }
+        .step-box h3 { margin-top: 0; color: #2c3e50; }
+
+        .step-number {
+            background: #27ae60;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            margin-right: 8px;
+        }
+
+        .random-badge {
+            background: #8e44ad;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            margin-left: 6px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 180px;
+            font-family: monospace;
+            font-size: 14px;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            margin: 10px 0;
+            box-sizing: border-box;
+        }
+
+        .button-row {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .submit-btn {
+            background: #27ae60;
+            color: white;
+            padding: 10px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        .submit-btn:hover { background: #219a52; }
+
+        .hint-btn {
+            background: #f39c12;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .hint-btn:hover { background: #d68910; }
+
+        .hint-box {
+            background: #fef9e7;
+            border: 1px solid #f39c12;
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 10px;
+            display: none;
+            font-size: 14px;
+        }
+
+        .result-box {
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 10px;
+            display: none;
+            font-size: 15px;
+        }
+
+        .success {
+            background: #d4edda;
+            border: 1px solid #27ae60;
+            color: #155724;
+        }
+
+        .error {
+            background: #f8d7da;
+            border: 1px solid #e74c3c;
+            color: #721c24;
+        }
+
+        .points-bar {
+            background: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #ddd;
+        }
+
+        .points-bar span {
+            font-size: 18px;
+            font-weight: bold;
+            color: #27ae60;
+        }
+
+        .progress-bar-wrap {
+            background: #ddd;
+            border-radius: 20px;
+            height: 10px;
+            margin: 10px 0 20px;
+        }
+
+        .progress-bar-fill {
+            background: #27ae60;
+            height: 10px;
+            border-radius: 20px;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        .stage-complete {
+            background: #27ae60;
+            color: white;
+            text-align: center;
+            padding: 30px;
+            border-radius: 8px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .stage-complete h2 { margin: 0 0 10px; font-size: 28px; }
+
+        .next-btn {
+            background: white;
+            color: #27ae60;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+        .step-lesson {
+            background: #eaf6ff;
+            border-left: 4px solid #3498db;
+            padding: 12px 15px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .step-lesson pre {
+            background: #1e272e;
+            color: #00ff88;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 13px;
+            margin: 8px 0 0;
+        }
+    </style>
+</head>
+<body>
+
+    <a href="/" class="back-link">← Back to Challenges</a>
+
+    <div class="points-bar">
+        <div>⭐ Stage 2 — Numbers and Loops</div>
+        <div>Your Points: <span id="pointsDisplay">0</span></div>
+    </div>
+
+    <!-- PROGRESS BAR -->
+    <div class="progress-bar-wrap">
+        <div class="progress-bar-fill" id="progressBar"></div>
+    </div>
+
+    <!-- LESSON -->
+    <div class="lesson-box">
+        <h2>📖 Lesson: Numbers, Loops and Calculations in Go</h2>
+        <p>In Go, you can print numbers directly with <code>fmt.Println()</code>. No quotes needed for numbers!</p>
+        <pre>fmt.Println(42)       // prints: 42
+fmt.Println(8 + 5)    // prints: 13
+fmt.Println(20 / 4)   // prints: 5</pre>
+        <p>To print a sequence of numbers, Go uses a <code>for</code> loop:</p>
+        <pre>for i := 1; i <= 5; i++ {
+    fmt.Println(i)
+}</pre>
+        <p>This prints 1, 2, 3, 4, 5 — each on its own line. The loop starts at 1, keeps going while i is less than or equal to 5, and adds 1 each time.</p>
+        <p>To check if a number is even or odd, use <code>%</code> which gives the remainder:</p>
+        <pre>if i % 2 == 0 {
+    fmt.Println(i)   // only prints even numbers
+}</pre>
+    </div>
+
+    <!-- STEP 1 — single number -->
+    <div class="step-box active" id="step1">
+        <h3>
+            <span class="step-number">Step 1 of 5</span>
+            Print your assigned number
+            <span class="random-badge">🎲 Random</span>
+        </h3>
+        <p>Your assigned number is different from other students. Print exactly this number:</p>
+        <pre id="q1Display">?</pre>
+        <p><strong>Tip:</strong> Use <code>fmt.Println()</code> but no quotes — numbers don't need quotes!</p>
+
+        <textarea id="code1" placeholder="Write your Go code here...">package main
+
+import "fmt"
+
+func main() {
+    // Write your code here
+}</textarea>
+
+        <div class="button-row">
+            <button class="submit-btn" onclick="checkStep1()">Submit Answer</button>
+            <button class="hint-btn" onclick="showHint(1)">💡 Get Hint (-5 pts)</button>
+        </div>
+        <div class="hint-box" id="hint1"></div>
+        <div class="result-box" id="result1"></div>
+    </div>
+
+<!-- STEP 2 — sequence -->
+    <div class="step-box" id="step2">
+        <h3>
+            <span class="step-number">Step 2 of 5</span>
+            Print a number sequence
+            <span class="random-badge">🎲 Random</span>
+        </h3>
+        <div class="step-lesson">
+            <strong>📖 How to do this:</strong> To print a sequence of numbers in Go, you use a <code>for</code> loop. A for loop repeats code multiple times. Here is the structure:
+            <pre>for i := 1; i <= 5; i++ {
+    fmt.Println(i)
+}</pre>
+            This means: start at 1, keep going while i is less than or equal to 5, add 1 each time. Change the 5 to whatever number your question needs!
+        </div>
+        <p id="q2Text">Your task will appear here.</p>
+        <pre id="q2Expected">?</pre>
+        <textarea id="code2" placeholder="Write your Go code here...">package main
+
+import "fmt"
+
+func main() {
+    // Write your code here
+}</textarea>
+
+        <div class="button-row">
+            <button class="submit-btn" onclick="checkStep2()">Submit Answer</button>
+            <button class="hint-btn" onclick="showHint(2)">💡 Get Hint (-5 pts)</button>
+        </div>
+        <div class="hint-box" id="hint2"></div>
+        <div class="result-box" id="result2"></div>
+    </div>
+
+    <!-- STEP 3 — even or odd -->
+    <div class="step-box" id="step3">
+        <h3>
+            <span class="step-number">Step 3 of 5</span>
+            Print even or odd numbers
+            <span class="random-badge">🎲 Random</span>
+        </h3>
+        <div class="step-lesson">
+            <strong>📖 How to do this:</strong> The <code>%</code> symbol gives you the remainder of a division. If a number divided by 2 has remainder 0, it is even. If the remainder is 1, it is odd.
+            <pre>for i := 1; i <= 10; i++ {
+    if i % 2 == 0 {
+        fmt.Println(i)  // only even numbers
+    }
+}</pre>
+            To print odd numbers instead, change <code>== 0</code> to <code>!= 0</code>
+        </div>
+        <p id="q3Text">Your task will appear here.</p>
+        <pre id="q3Expected">?</pre>
+        <textarea id="code3" placeholder="Write your Go code here...">package main
+
+import "fmt"
+
+func main() {
+    // Write your code here
+}</textarea>
+
+        <div class="button-row">
+            <button class="submit-btn" onclick="checkStep3()">Submit Answer</button>
+            <button class="hint-btn" onclick="showHint(3)">💡 Get Hint (-5 pts)</button>
+        </div>
+        <div class="hint-box" id="hint3"></div>
+        <div class="result-box" id="result3"></div>
+    </div>
+
+    <!-- STEP 4 — calculation -->
+    <div class="step-box" id="step4">
+        <h3>
+            <span class="step-number">Step 4 of 5</span>
+            Print a calculation result
+            <span class="random-badge">🎲 Random</span>
+        </h3>
+        <div class="step-lesson">
+            <strong>📖 How to do this:</strong> In Go you can put a calculation directly inside <code>fmt.Println()</code> and it will calculate and print the result automatically.
+            <pre>fmt.Println(8 + 5)   // prints 13
+fmt.Println(4 * 6)   // prints 24
+fmt.Println(20 / 4)  // prints 5
+fmt.Println(20 - 7)  // prints 13</pre>
+            The symbols are: <code>+</code> add, <code>-</code> subtract, <code>*</code> multiply, <code>/</code> divide.
+        </div>
+        <p id="q4Text">Your task will appear here.</p>
+        <pre id="q4Expected">?</pre>
+        <textarea id="code4" placeholder="Write your Go code here...">package main
+
+import "fmt"
+
+func main() {
+    // Write your code here
+}</textarea>
+
+        <div class="button-row">
+            <button class="submit-btn" onclick="checkStep4()">Submit Answer</button>
+            <button class="hint-btn" onclick="showHint(4)">💡 Get Hint (-5 pts)</button>
+        </div>
+        <div class="hint-box" id="hint4"></div>
+        <div class="result-box" id="result4"></div>
+    </div>
+
+    <!-- STEP 5 — rectangle perimeter -->
+    <div class="step-box" id="step5">
+        <h3>
+            <span class="step-number">Step 5 of 5</span>
+            Calculate a rectangle perimeter
+            <span class="random-badge">🎲 Random</span>
+        </h3>
+        <div class="step-lesson">
+            <strong>📖 How to do this:</strong> A variable in Go stores a value so you can use it later. The <code>:=</code> symbol creates a new variable.
+            <pre>w := 3           // create variable w with value 3
+h := 4           // create variable h with value 4
+p := 2 * (w + h) // calculate perimeter and store it
+fmt.Println(p)   // print the result</pre>
+            The perimeter formula is: <strong>2 × (width + height)</strong>. Just change w and h to match your assigned values!
+        </div>
+        <p id="q5Text">Your task will appear here.</p>
+        <pre id="q5Expected">?</pre>
+        <textarea id="code5" placeholder="Write your Go code here...">package main
+
+import "fmt"
+
+func main() {
+    // Write your code here
+}</textarea>
+
+        <div class="button-row">
+            <button class="submit-btn" onclick="checkStep5()">Submit Answer</button>
+            <button class="hint-btn" onclick="showHint(5)">💡 Get Hint (-5 pts)</button>
+        </div>
+        <div class="hint-box" id="hint5"></div>
+        <div class="result-box" id="result5"></div>
+    </div>
+
+    <!-- STAGE COMPLETE -->
+    <div class="stage-complete" id="stageComplete">
+        <h2>🎉 Stage 2 Complete!</h2>
+        <p>You have mastered numbers and loops in Go!</p>
+        <p>Final Points: <strong id="finalPoints">0</strong></p>
+        <button class="next-btn" onclick="window.location.href='/'">← Back to All Challenges</button>
+    </div>
+
+    <script>
+        // ── Question pools ──────────────────────────────────────────
+
+        const q1Pool = [
+            { display: "7",   check: c => c.includes("fmt.Println(7)"),   hint: 'Use fmt.Println(7) — no quotes for numbers!' },
+            { display: "42",  check: c => c.includes("fmt.Println(42)"),  hint: 'Use fmt.Println(42) — no quotes for numbers!' },
+            { display: "100", check: c => c.includes("fmt.Println(100)"), hint: 'Use fmt.Println(100) — no quotes for numbers!' },
+            { display: "256", check: c => c.includes("fmt.Println(256)"), hint: 'Use fmt.Println(256) — no quotes for numbers!' },
+        ];
+
+        const q2Pool = [
+            {
+                text: "Print all numbers from 1 to 3, each on its own line:",
+                expected: "1\n2\n3",
+                check: c => c.includes("i <= 3") || c.includes("i < 4"),
+                hint: 'Use: for i := 1; i <= 3; i++ { fmt.Println(i) }'
+            },
+            {
+                text: "Print all numbers from 1 to 5, each on its own line:",
+                expected: "1\n2\n3\n4\n5",
+                check: c => c.includes("i <= 5") || c.includes("i < 6"),
+                hint: 'Use: for i := 1; i <= 5; i++ { fmt.Println(i) }'
+            },
+            {
+                text: "Print all numbers from 1 to 7, each on its own line:",
+                expected: "1\n2\n3\n4\n5\n6\n7",
+                check: c => c.includes("i <= 7") || c.includes("i < 8"),
+                hint: 'Use: for i := 1; i <= 7; i++ { fmt.Println(i) }'
+            },
+            {
+                text: "Print all numbers from 1 to 10, each on its own line:",
+                expected: "1\n2\n3\n4\n5\n6\n7\n8\n9\n10",
+                check: c => c.includes("i <= 10") || c.includes("i < 11"),
+                hint: 'Use: for i := 1; i <= 10; i++ { fmt.Println(i) }'
+            },
+        ];
+
+        const q3Pool = [
+            {
+                text: "Print only the EVEN numbers from 1 to 10:",
+                expected: "2\n4\n6\n8\n10",
+                check: c => (c.includes("i <= 10") || c.includes("i < 11")) && c.includes("% 2 == 0"),
+                hint: 'Use a for loop 1 to 10, and inside: if i % 2 == 0 { fmt.Println(i) }'
+            },
+            {
+                text: "Print only the ODD numbers from 1 to 10:",
+                expected: "1\n3\n5\n7\n9",
+                check: c => (c.includes("i <= 10") || c.includes("i < 11")) && c.includes("% 2 != 0"),
+                hint: 'Use a for loop 1 to 10, and inside: if i % 2 != 0 { fmt.Println(i) }'
+            },
+            {
+                text: "Print only the EVEN numbers from 1 to 20:",
+                expected: "2\n4\n6\n8\n10\n12\n14\n16\n18\n20",
+                check: c => (c.includes("i <= 20") || c.includes("i < 21")) && c.includes("% 2 == 0"),
+                hint: 'Use a for loop 1 to 20, and inside: if i % 2 == 0 { fmt.Println(i) }'
+            },
+            {
+                text: "Print only the ODD numbers from 1 to 20:",
+                expected: "1\n3\n5\n7\n9\n11\n13\n15\n17\n19",
+                check: c => (c.includes("i <= 20") || c.includes("i < 21")) && c.includes("% 2 != 0"),
+                hint: 'Use a for loop 1 to 20, and inside: if i % 2 != 0 { fmt.Println(i) }'
+            },
+        ];
+
+        const q4Pool = [
+            {
+                text: "Print the result of 8 + 5:",
+                expected: "13",
+                check: c => c.includes("fmt.Println(8 + 5)") || c.includes("fmt.Println(13)"),
+                hint: 'Use fmt.Println(8 + 5) — Go will calculate it for you!'
+            },
+            {
+                text: "Print the result of 20 - 7:",
+                expected: "13",
+                check: c => c.includes("fmt.Println(20 - 7)") || c.includes("fmt.Println(13)"),
+                hint: 'Use fmt.Println(20 - 7) — Go will calculate it for you!'
+            },
+            {
+                text: "Print the result of 4 × 6:",
+                expected: "24",
+                check: c => c.includes("fmt.Println(4 * 6)") || c.includes("fmt.Println(24)"),
+                hint: 'Use fmt.Println(4 * 6) — in Go, multiplication uses the * symbol!'
+            },
+            {
+                text: "Print the result of 20 ÷ 4:",
+                expected: "5",
+                check: c => c.includes("fmt.Println(20 / 4)") || c.includes("fmt.Println(5)"),
+                hint: 'Use fmt.Println(20 / 4) — in Go, division uses the / symbol!'
+            },
+        ];
+
+        const q5Pool = [
+            {
+                text: "Calculate and print the perimeter of a rectangle with width 3 and height 4:",
+                expected: "14",
+                answer: 2 * (3 + 4),
+                hint: 'Perimeter = 2 * (w + h). So: w := 3 \n h := 4 \n fmt.Println(2 * (w + h))'
+            },
+            {
+                text: "Calculate and print the perimeter of a rectangle with width 5 and height 7:",
+                expected: "24",
+                answer: 2 * (5 + 7),
+                hint: 'Perimeter = 2 * (w + h). So: w := 5 \n h := 7 \n fmt.Println(2 * (w + h))'
+            },
+            {
+                text: "Calculate and print the perimeter of a rectangle with width 6 and height 2:",
+                expected: "16",
+                answer: 2 * (6 + 2),
+                hint: 'Perimeter = 2 * (w + h). So: w := 6 \n h := 2 \n fmt.Println(2 * (w + h))'
+            },
+            {
+                text: "Calculate and print the perimeter of a rectangle with width 10 and height 3:",
+                expected: "26",
+                answer: 2 * (10 + 3),
+                hint: 'Perimeter = 2 * (w + h). So: w := 10 \n h := 3 \n fmt.Println(2 * (w + h))'
+            },
+        ];
+
+        // ── Pick random questions ────────────────────────────────────
+        function pick(pool) {
+            return pool[Math.floor(Math.random() * pool.length)];
+        }
+
+        const q1 = pick(q1Pool);
+        const q2 = pick(q2Pool);
+        const q3 = pick(q3Pool);
+        const q4 = pick(q4Pool);
+        const q5 = pick(q5Pool);
+
+        // ── Fill question displays ───────────────────────────────────
+        document.getElementById("q1Display").textContent = q1.display;
+        document.getElementById("hint1").textContent = q1.hint;
+
+        document.getElementById("q2Text").textContent = q2.text;
+        document.getElementById("q2Expected").textContent = q2.expected.replace(/\\n/g, "\n");
+        document.getElementById("hint2").textContent = q2.hint;
+
+        document.getElementById("q3Text").textContent = q3.text;
+        document.getElementById("q3Expected").textContent = q3.expected.replace(/\\n/g, "\n");
+        document.getElementById("hint3").textContent = q3.hint;
+
+        document.getElementById("q4Text").textContent = q4.text;
+        document.getElementById("q4Expected").textContent = q4.expected;
+        document.getElementById("hint4").textContent = q4.hint;
+
+        document.getElementById("q5Text").textContent = q5.text;
+        document.getElementById("q5Expected").textContent = q5.expected;
+        document.getElementById("hint5").textContent = q5.hint;
+
+        // ── Points and progress ──────────────────────────────────────
+        let points = 0;
+        let stepsCompleted = 0;
+        let hintUsed = [false, false, false, false, false];
+
+        function updatePoints(add) {
+            points += add;
+            if (points < 0) points = 0;
+            document.getElementById("pointsDisplay").textContent = points;
+        }
+
+        function updateProgress() {
+            stepsCompleted++;
+            const percent = (stepsCompleted / 5) * 100;
+            document.getElementById("progressBar").style.width = percent + "%";
+        }
+
+        function showHint(step) {
+            if (hintUsed[step - 1]) {
+                alert("You already used the hint for this step!");
+                return;
+            }
+            hintUsed[step - 1] = true;
+            updatePoints(-5);
+            document.getElementById("hint" + step).style.display = "block";
+        }
+
+        function showResult(step, passed, message) {
+            const box = document.getElementById("result" + step);
+            box.style.display = "block";
+            box.className = "result-box " + (passed ? "success" : "error");
+            box.textContent = message;
+        }
+
+        function unlockStep(nextStep) {
+            setTimeout(function() {
+                const next = document.getElementById("step" + nextStep);
+                next.classList.add("active");
+                next.scrollIntoView({ behavior: "smooth" });
+            }, 1200);
+        }
+
+        // ── Checkers ─────────────────────────────────────────────────
+
+        function checkStep1() {
+            const code = document.getElementById("code1").value;
+            if (q1.check(code)) {
+                updatePoints(10);
+                updateProgress();
+                showResult(1, true, "✅ Correct! You printed " + q1.display + " and earned 10 points! Step 2 unlocking...");
+                unlockStep(2);
+            } else {
+                showResult(1, false, "❌ Not quite. You need to print the number " + q1.display + " — remember, no quotes for numbers!");
+            }
+        }
+
+        function checkStep2() {
+            const code = document.getElementById("code2").value;
+            if (q2.check(code)) {
+                updatePoints(10);
+                updateProgress();
+                showResult(2, true, "✅ Correct! Your loop works! You earned 10 points! Step 3 unlocking...");
+                unlockStep(3);
+            } else {
+                showResult(2, false, "❌ Not quite. Use a for loop — check the lesson above for the structure!");
+            }
+        }
+
+        function checkStep3() {
+            const code = document.getElementById("code3").value;
+            if (q3.check(code)) {
+                updatePoints(10);
+                updateProgress();
+                showResult(3, true, "✅ Correct! You filtered numbers perfectly! You earned 10 points! Step 4 unlocking...");
+                unlockStep(4);
+            } else {
+                showResult(3, false, "❌ Not quite. Use a for loop and check i % 2 inside it — see the lesson above!");
+            }
+        }
+
+        function checkStep4() {
+            const code = document.getElementById("code4").value;
+            if (q4.check(code)) {
+                updatePoints(10);
+                updateProgress();
+                showResult(4, true, "✅ Correct! The calculation is right! You earned 10 points! Step 5 unlocking...");
+                unlockStep(5);
+            } else {
+                showResult(4, false, "❌ Not quite. Try putting the calculation directly inside fmt.Println()!");
+            }
+        }
+
+        function checkStep5() {
+            const code = document.getElementById("code5").value;
+            const hasAnswer = code.includes(String(q5.answer));
+            const hasFormula = code.includes("2 *") || code.includes("2*");
+            if (hasAnswer || hasFormula) {
+                updatePoints(10);
+                updateProgress();
+                document.getElementById("finalPoints").textContent = points;
+                showResult(5, true, "✅ Correct! Perimeter = " + q5.answer + "! You earned 10 points!");
+                setTimeout(function() {
+                    document.getElementById("stageComplete").style.display = "block";
+                    document.getElementById("stageComplete").scrollIntoView({ behavior: "smooth" });
+                }, 1200);
+            } else {
+                showResult(5, false, "❌ Not quite. Remember: perimeter = 2 * (width + height). Check your numbers!");
+            }
+        }
+    </script>
+
+</body>
+</html>
