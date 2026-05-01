@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Challenge - L2E CodeStudy Platform</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            color: #2c3e50;
+        }
+
+        .back-link {
+            color: #27ae60;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .challenge-box {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 5px solid #27ae60;
+        }
+
+        .badge {
+            background: #27ae60;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 200px;
+            font-family: monospace;
+            font-size: 14px;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+
+        button {
+            background: #27ae60;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #219a52;
+        }
+
+        .result-box {
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .success {
+            background: #d4edda;
+            border: 1px solid #27ae60;
+            color: #155724;
+        }
+
+        .error {
+            background: #f8d7da;
+            border: 1px solid #e74c3c;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+
+    <a href="/" class="back-link">← Back to Challenges</a>
+
+    <div class="challenge-box">
+        <h1>Hello World in Go</h1>
+        <span class="badge">Beginner</span>
+        <span style="margin-left: 10px; color: #27ae60; font-weight: bold;">10 pts</span>
+
+        <h3>The Challenge</h3>
+        <p>Write a Go program that prints exactly this to the screen:</p>
+        <pre>Hello, World!</pre>
+
+        <h3>Example Output</h3>
+        <pre>Hello, World!</pre>
+    </div>
+
+    <h3>Write your answer here:</h3>
+    <textarea id="code" placeholder="Type your Go code here...">package main
+
+import "fmt"
+
+func main() {
+    // Write your code here
+}</textarea>
+
+    <br>
+    <button onclick="submitAnswer()">Submit Answer</button>
+
+    <div id="result" class="result-box"></div>
+
+    <script>
+        function submitAnswer() {
+            const code = document.getElementById("code").value;
+            const resultBox = document.getElementById("result");
+
+            // For now we just check if they mentioned fmt.Println
+            if (code.includes('fmt.Println("Hello, World!")')) {
+                resultBox.className = "result-box success";
+                resultBox.innerText = "✅ Correct! You earned 10 points!";
+            } else {
+                resultBox.className = "result-box error";
+                resultBox.innerText = "❌ Not quite. Make sure you print exactly: Hello, World!";
+            }
+
+            resultBox.style.display = "block";
+        }
+    </script>
+
+</body>
+</html>
