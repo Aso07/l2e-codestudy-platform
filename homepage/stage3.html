@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Stage 3 - L2E CodeStudy Platform</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+
+        .back-link {
+            color: #27ae60;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .lesson-box {
+            background: #eaf6ff;
+            border-left: 5px solid #3498db;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .lesson-box h2 { color: #2980b9; margin-top: 0; }
+
+        .lesson-box code, .step-lesson code {
+            background: #d6eaf8;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .lesson-box pre, .step-box pre, .step-lesson pre {
+            background: #1e272e;
+            color: #00ff88;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .step-lesson {
+            background: #eaf6ff;
+            border-left: 4px solid #3498db;
+            padding: 12px 15px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .step-lesson pre {
+            background: #1e272e;
+            color: #00ff88;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 13px;
+            margin: 8px 0 0;
+        }
+
+        .step-box {
+            background: white;
+            border-left: 5px solid #8e44ad;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            display: none;
+        }
+
+        .step-box.active { display: block; }
+        .step-box h3 { margin-top: 0; color: #2c3e50; }
+
+        .step-number {
+            background: #8e44ad;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            margin-right: 8px;
+        }
+
+        .random-badge {
+            background: #e74c3c;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            margin-left: 6px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 180px;
+            font-family: monospace;
+            font-size: 14px;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            margin: 10px 0;
+            box-sizing: border-box;
+        }
+
+        .button-row {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .submit-btn {
+            background: #8e44ad;
+            color: white;
+            padding: 10px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        .submit-btn:hover { background: #7d3c98; }
+
+        .hint-btn {
+            background: #f39c12;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .hint-btn:hover { background: #d68910; }
+
+        .hint-box {
+            background: #fef9e7;
+            border: 1px solid #f39c12;
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 10px;
+            display: none;
+            font-size: 14px;
+        }
+
+        .result-box {
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 10px;
+            display: none;
+            font-size: 15px;
+        }
+
+        .success {
+            background: #d4edda;
+            border: 1px solid #27ae60;
+            color: #155724;
+        }
+
+        .error {
+            background: #f8d7da;
+            border: 1px solid #e74c3c;
+            color: #721c24;
+        }
+
+        .points-bar {
+            background: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #ddd;
+        }
+
+        .points-bar span {
+            font-size: 18px;
+            font-weight: bold;
+            color: #8e44ad;
+        }
+
+        .progress-bar-wrap {
+            background: #ddd;
+            border-radius: 20px;
+            height: 10px;
+            margin: 10px 0 20px;
+        }
+
+        .progress-bar-fill {
+            background: #8e44ad;
+            height: 10px;
+            border-radius: 20px;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        .stage-complete {
+            background: #8e44ad;
+            color: white;
+            text-align: center;
+            padding: 30px;
+            border-radius: 8px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .stage-complete h2 { margin: 0 0 10px; font-size: 28px; }
+
+        .next-btn {
+            background: white;
+            color: #8e44ad;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <a href="/" class="back-link">← Back to Challenges</a>
+
+    <div class="points-bar">
+        <div>⭐ Stage 3 — Strings and Text</div>
+        <div>Your Points: <span id="pointsDisplay">0</span></div>
+    </div>
+
+    <div class="progress-bar-wrap">
+        <div class="progress-bar-fill" id="progressBar"></div>
+    </div>
+
+    <!-- MAIN LESSON -->
+    <div class="lesson-box">
+        <h2>📖 Lesson: Working with Strings in Go</h2>
+        <p>A <strong>string</strong> in Go is any text wrapped in double quotes. You can do many useful things with strings:</p>
+        <pre>// Get the length of a string
+fmt.Println(len("hello"))    // prints: 5
+
+// Strings have individual characters you can loop through
+for _, ch := range "hello" {
+    fmt.Println(string(ch))  // prints each letter
+}
+
+// Check if a string contains something
+import "strings"
+fmt.Println(strings.Contains("hello", "ell"))  // prints: true</pre>
+        <p>The <code>len()</code> function counts how many characters are in a string. The <code>range</code> keyword lets you loop through each character one by one.</p>
+    </div>
+
+    <!-- STEP 1 — string length -->
+    <div class="step-box active" id="step1">
+        <h3>
+            <span class="step-number">Step 1 of 5</span>
+            Print the length of a string
+            <span class="random-badge">🎲 Random</span>
+        </h3>
+        <div class="step-lesson">
+            <strong>📖 How to do this:</strong> In Go, <code>len()</code> counts the number of characters in a string. You pass the string inside the brackets:
+            <pre>fmt.Println(len("hello"))  // prints 5</pre>
+            Just replace "hello" with your assigned word below!
+        </div>
+        <p id="q1Text">Your task will appear here.</p>
+        <pre id="q1Expected">?</pre>
+
+        <textarea id="code1" placeholder="Write your Go code here...">package main
+
+import "fmt"
+
+func main() {
+    // Write your code here
+}</textarea>
+
+        <div class="button-row">
+            <button class="submit-btn" onclick="checkStep1()">Submit Answer</button>
+            <button class="hint-btn" onclick="showHint(1)">💡 Get Hint (-5 pts)</button>
+        </div>
+        <div class="hint-box" id="hint1"></div>
+        <div class="result-box" id="result1"></div>
+    </div>
+
+    <!-- STEP 2 — count a character -->
+    <div class="step-box" id="step2">
+        <h3>
+            <span class="step-number">Step 2 of 5</span>
+            Count a character in a string
+            <span class="random-badge">🎲 Random</span>
+        </h3>
+        <div class="step-lesson">
+            <strong>📖 How to do this:</strong> To count how many times a character appears, loop through the string and add 1 every time you find it:
+            <pre>count := 0
+for _, ch := range "hello world" {
+    if ch == 'l' {
+        count++
+    }
+}
+fmt.Println(count)</pre>
+            Notice: single characters use single quotes <code>'l'</code> not double quotes!
+        </div>
+        <p id="q2Text">Your task will appear here.</p>
+        <pre id="q2Expected">?</pre>
+
+        <textarea id="code2" placeholder="Write your Go code here...">package main
+
+import "fmt"
+
+func main() {
+    // Write your code here
+}</textarea>
+
+        <div class="button-row">
+            <button class="submit-btn" onclick="checkStep2()">Submit Answer</button>
+            <button class="hint-btn" onclick="showHint(2)">💡 Get Hint (-5 pts)</button>
+        </div>
+        <div class="hint-box" id="hint2"></div>
+        <div class="result-box" id="result2"></div>
+    </div>
+
+    <!-- STEP 3 — contains character -->
+    <div class="step-box" id="step3">
+        <h3>
+            <span class="step-number">Step 3 of 5</span>
+            Check if a string contains a letter
+            <span class="random-badge">🎲 Random</span>
+        </h3>
+        <div class="step-lesson">
+            <strong>📖 How to do this:</strong> The <code>strings</code> package has a <code>Contains</code> function that checks if a string has something inside it:
+            <pre>import "strings"
+
+result := strings.Contains("hello", "e")
+fmt.Println(result)  // prints: true</pre>
+            It prints <code>true</code> if found and <code>false</code> if not found.
+        </div>
+        <p id="q3Text">Your task will appear here.</p>
+        <pre id="q3Expected">?</pre>
+
+        <textarea id="code3" placeholder="Write your Go code here...">package main
+
+import (
+    "fmt"
+    "strings"
+)
+
+func main() {
+    // Write your code here
+}</textarea>
+
+        <div class="button-row">
+            <button class="submit-btn" onclick="checkStep3()">Submit Answer</button>
+            <button class="hint-btn" onclick="showHint(3)">💡 Get Hint (-5 pts)</button>
+        </div>
+        <div class="hint-box" id="hint3"></div>
+        <div class="result-box" id="result3"></div>
+    </div>
+
+    <!-- STEP 4 — first word -->
+    <div class="step-box" id="step4">
+        <h3>
+            <span class="step-number">Step 4 of 5</span>
+            Print the first word of a sentence
+            <span class="random-badge">🎲 Random</span>
+        </h3>
+        <div class="step-lesson">
+            <strong>📖 How to do this:</strong> The <code>strings</code> package can split a sentence into words using <code>strings.Fields()</code>. It splits on spaces and gives you a list of words:
+            <pre>import "strings"
+
+words := strings.Fields("hello world")
+fmt.Println(words[0])  // prints: hello</pre>
+            <code>words[0]</code> means the first item — Go counts from 0!
+        </div>
+        <p id="q4Text">Your task will appear here.</p>
+        <pre id="q4Expected">?</pre>
+
+        <textarea id="code4" placeholder="Write your Go code here...">package main
+
+import (
+    "fmt"
+    "strings"
+)
+
+func main() {
+    // Write your code here
+}</textarea>
+
+        <div class="button-row">
+            <button class="submit-btn" onclick="checkStep4()">Submit Answer</button>
+            <button class="hint-btn" onclick="showHint(4)">💡 Get Hint (-5 pts)</button>
+        </div>
+        <div class="hint-box" id="hint4"></div>
+        <div class="result-box" id="result4"></div>
+    </div>
+
+    <!-- STEP 5 — contains number -->
+    <div class="step-box" id="step5">
+        <h3>
+            <span class="step-number">Step 5 of 5</span>
+            Check if a string contains a number
+            <span class="random-badge">🎲 Random</span>
+        </h3>
+        <div class="step-lesson">
+            <strong>📖 How to do this:</strong> To check if a string has a digit inside it, loop through each character and check if it is between '0' and '9':
+            <pre>found := false
+for _, ch := range "abc123" {
+    if ch >= '0' && ch <= '9' {
+        found = true
+    }
+}
+fmt.Println(found)  // prints: true</pre>
+            This is exactly the same idea as your fellowship's CheckNumber challenge!
+        </div>
+        <p id="q5Text">Your task will appear here.</p>
+        <pre id="q5Expected">?</pre>
+
+        <textarea id="code5" placeholder="Write your Go code here...">package main
+
+import "fmt"
+
+func main() {
+    // Write your code here
+}</textarea>
+
+        <div class="button-row">
+            <button class="submit-btn" onclick="checkStep5()">Submit Answer</button>
+            <button class="hint-btn" onclick="showHint(5)">💡 Get Hint (-5 pts)</button>
+        </div>
+        <div class="hint-box" id="hint5"></div>
+        <div class="result-box" id="result5"></div>
+    </div>
+
+    <!-- STAGE COMPLETE -->
+    <div class="stage-complete" id="stageComplete">
+        <h2>🎉 Stage 3 Complete!</h2>
+        <p>You have mastered strings and text in Go!</p>
+        <p>Final Points: <strong id="finalPoints">0</strong></p>
+        <button class="next-btn" onclick="window.location.href='/'">← Back to All Challenges</button>
+    </div>
+
+    <script>
+        // ── Question pools ──────────────────────────────────
+
+        const q1Pool = [
+            { text: 'Print the length of the word "hello":', expected: "5",  word: "hello",  hint: 'Use fmt.Println(len("hello"))' },
+            { text: 'Print the length of the word "Otukpo":', expected: "6",  word: "Otukpo", hint: 'Use fmt.Println(len("Otukpo"))' },
+            { text: 'Print the length of the word "golang":', expected: "6",  word: "golang", hint: 'Use fmt.Println(len("golang"))' },
+            { text: 'Print the length of the word "campus":', expected: "6",  word: "campus", hint: 'Use fmt.Println(len("campus"))' },
+        ];
+
+        const q2Pool = [
+            { text: 'Count how many times "l" appears in "hello world". Print the count:', expected: "3", str: "hello world", ch: "l", count: 3, hint: "Loop through the string and count every time ch == 'l'" },
+            { text: 'Count how many times "o" appears in "Otukpo campus". Print the count:', expected: "1", str: "Otukpo campus", ch: "o", count: 1, hint: "Loop through the string and count every time ch == 'o' (lowercase!)" },
+            { text: 'Count how many times "a" appears in "abracadabra". Print the count:', expected: "5", str: "abracadabra", ch: "a", count: 5, hint: "Loop through the string and count every time ch == 'a'" },
+            { text: 'Count how many times "s" appears in "mississippi". Print the count:', expected: "4", str: "mississippi", ch: "s", count: 4, hint: "Loop through the string and count every time ch == 's'" },
+        ];
+
+        const q3Pool = [
+            { text: 'Does "hello" contain the letter "e"? Print true or false:', expected: "true",  str: "hello",  ch: "e", hint: 'Use fmt.Println(strings.Contains("hello", "e"))' },
+            { text: 'Does "golang" contain the letter "x"? Print true or false:', expected: "false", str: "golang", ch: "x", hint: 'Use fmt.Println(strings.Contains("golang", "x"))' },
+            { text: 'Does "Otukpo" contain the letter "k"? Print true or false:', expected: "true",  str: "Otukpo", ch: "k", hint: 'Use fmt.Println(strings.Contains("Otukpo", "k"))' },
+            { text: 'Does "campus" contain the letter "z"? Print true or false:', expected: "false", str: "campus", ch: "z", hint: 'Use fmt.Println(strings.Contains("campus", "z"))' },
+        ];
+
+        const q4Pool = [
+            { text: 'Print the first word of: "hello world"',       expected: "hello",  sentence: "hello world",        hint: 'Use strings.Fields("hello world")[0]' },
+            { text: 'Print the first word of: "Go is fun"',          expected: "Go",     sentence: "Go is fun",          hint: 'Use strings.Fields("Go is fun")[0]' },
+            { text: 'Print the first word of: "Learn to earn"',      expected: "Learn",  sentence: "Learn to earn",      hint: 'Use strings.Fields("Learn to earn")[0]' },
+            { text: 'Print the first word of: "Otukpo campus rocks"',expected: "Otukpo", sentence: "Otukpo campus rocks",hint: 'Use strings.Fields("Otukpo campus rocks")[0]' },
+        ];
+
+        const q5Pool = [
+            { text: 'Does "abc123" contain a number? Print true or false:',  expected: "true",  str: "abc123",  hint: 'Loop through the string and check if ch >= \'0\' && ch <= \'9\'' },
+            { text: 'Does "hello" contain a number? Print true or false:',   expected: "false", str: "hello",   hint: 'Loop through the string and check if ch >= \'0\' && ch <= \'9\'' },
+            { text: 'Does "L2E2024" contain a number? Print true or false:', expected: "true",  str: "L2E2024", hint: 'Loop through the string and check if ch >= \'0\' && ch <= \'9\'' },
+            { text: 'Does "otukpo" contain a number? Print true or false:',  expected: "false", str: "otukpo",  hint: 'Loop through the string and check if ch >= \'0\' && ch <= \'9\'' },
+        ];
+
+        // ── Pick random questions ────────────────────────────
+        function pick(pool) {
+            return pool[Math.floor(Math.random() * pool.length)];
+        }
+
+        const q1 = pick(q1Pool);
+        const q2 = pick(q2Pool);
+        const q3 = pick(q3Pool);
+        const q4 = pick(q4Pool);
+        const q5 = pick(q5Pool);
+
+        // ── Fill displays ────────────────────────────────────
+        document.getElementById("q1Text").textContent = q1.text;
+        document.getElementById("q1Expected").textContent = q1.expected;
+        document.getElementById("hint1").textContent = q1.hint;
+
+        document.getElementById("q2Text").textContent = q2.text;
+        document.getElementById("q2Expected").textContent = q2.expected;
+        document.getElementById("hint2").textContent = q2.hint;
+
+        document.getElementById("q3Text").textContent = q3.text;
+        document.getElementById("q3Expected").textContent = q3.expected;
+        document.getElementById("hint3").textContent = q3.hint;
+
+        document.getElementById("q4Text").textContent = q4.text;
+        document.getElementById("q4Expected").textContent = q4.expected;
+        document.getElementById("hint4").textContent = q4.hint;
+
+        document.getElementById("q5Text").textContent = q5.text;
+        document.getElementById("q5Expected").textContent = q5.expected;
+        document.getElementById("hint5").textContent = q5.hint;
+
+        // ── Points and progress ──────────────────────────────
+        let points = 0;
+        let stepsCompleted = 0;
+        let hintUsed = [false, false, false, false, false];
+
+        function updatePoints(add) {
+            points += add;
+            if (points < 0) points = 0;
+            document.getElementById("pointsDisplay").textContent = points;
+        }
+
+        function updateProgress() {
+            stepsCompleted++;
+            document.getElementById("progressBar").style.width = (stepsCompleted / 5 * 100) + "%";
+        }
+
+        function showHint(step) {
+            if (hintUsed[step - 1]) {
+                alert("You already used the hint for this step!");
+                return;
+            }
+            hintUsed[step - 1] = true;
+            updatePoints(-5);
+            document.getElementById("hint" + step).style.display = "block";
+        }
+
+        function showResult(step, passed, message) {
+            const box = document.getElementById("result" + step);
+            box.style.display = "block";
+            box.className = "result-box " + (passed ? "success" : "error");
+            box.textContent = message;
+        }
+
+        function unlockStep(nextStep) {
+            setTimeout(function() {
+                const next = document.getElementById("step" + nextStep);
+                next.classList.add("active");
+                next.scrollIntoView({ behavior: "smooth" });
+            }, 1200);
+        }
+
+        // ── Checkers ─────────────────────────────────────────
+
+        function checkStep1() {
+            const code = document.getElementById("code1").value;
+            if (code.includes('len("' + q1.word + '")')) {
+                updatePoints(10);
+                updateProgress();
+                showResult(1, true, "✅ Correct! The length of \"" + q1.word + "\" is " + q1.expected + ". You earned 10 points! Step 2 unlocking...");
+                unlockStep(2);
+            } else {
+                showResult(1, false, "❌ Not quite. Use len() with your assigned word inside quotes.");
+            }
+        }
+
+        function checkStep2() {
+            const code = document.getElementById("code2").value;
+            if (code.includes(q2.count) && code.includes("range") && code.includes("count")) {
+                updatePoints(10);
+                updateProgress();
+                showResult(2, true, "✅ Correct! \"" + q2.ch + "\" appears " + q2.count + " times. You earned 10 points! Step 3 unlocking...");
+                unlockStep(3);
+            } else {
+                showResult(2, false, "❌ Not quite. Use a for range loop and a count variable. Check the lesson above!");
+            }
+        }
+
+        function checkStep3() {
+            const code = document.getElementById("code3").value;
+            if (code.includes('strings.Contains("' + q3.str + '", "' + q3.ch + '")')) {
+                updatePoints(10);
+                updateProgress();
+                showResult(3, true, "✅ Correct! The answer is " + q3.expected + ". You earned 10 points! Step 4 unlocking...");
+                unlockStep(4);
+            } else {
+                showResult(3, false, "❌ Not quite. Use strings.Contains() with your assigned string and letter.");
+            }
+        }
+
+        function checkStep4() {
+            const code = document.getElementById("code4").value;
+            if (code.includes('strings.Fields("' + q4.sentence + '")') && code.includes("[0]")) {
+                updatePoints(10);
+                updateProgress();
+                showResult(4, true, "✅ Correct! The first word is \"" + q4.expected + "\". You earned 10 points! Step 5 unlocking...");
+                unlockStep(5);
+            } else {
+                showResult(4, false, "❌ Not quite. Use strings.Fields() with your sentence, then add [0] to get the first word.");
+            }
+        }
+
+        function checkStep5() {
+            const code = document.getElementById("code5").value;
+            if (code.includes("range") && code.includes("'0'") && code.includes("'9'")) {
+                updatePoints(10);
+                updateProgress();
+                document.getElementById("finalPoints").textContent = points;
+                showResult(5, true, "✅ Correct! The answer is " + q5.expected + ". You earned 10 points!");
+                setTimeout(function() {
+                    document.getElementById("stageComplete").style.display = "block";
+                    document.getElementById("stageComplete").scrollIntoView({ behavior: "smooth" });
+                }, 1200);
+            } else {
+                showResult(5, false, "❌ Not quite. Loop through the string and check each character against '0' and '9'.");
+            }
+        }
+    </script>
+
+</body>
+</html>
