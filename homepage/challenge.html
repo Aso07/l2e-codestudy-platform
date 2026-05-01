@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Challenge - L2E CodeStudy Platform</title>
+    <title>Stage 1 - L2E CodeStudy Platform</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -11,62 +11,127 @@
             background-color: #f4f4f4;
         }
 
-        h1 {
-            color: #2c3e50;
-        }
-
         .back-link {
             color: #27ae60;
             text-decoration: none;
             font-weight: bold;
         }
 
-        .challenge-box {
-            background: white;
+        .lesson-box {
+            background: #eaf6ff;
+            border-left: 5px solid #3498db;
             padding: 20px;
             border-radius: 8px;
             margin: 20px 0;
-            border-left: 5px solid #27ae60;
         }
 
-        .badge {
+        .lesson-box h2 { color: #2980b9; margin-top: 0; }
+
+        .lesson-box code {
+            background: #d6eaf8;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .lesson-box pre, .step-box pre {
+            background: #1e272e;
+            color: #00ff88;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 16px;
+            letter-spacing: 1px;
+        }
+
+        .step-box {
+            background: white;
+            border-left: 5px solid #27ae60;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            display: none;
+        }
+
+        .step-box.active { display: block; }
+        .step-box h3 { margin-top: 0; color: #2c3e50; }
+
+        .step-number {
             background: #27ae60;
             color: white;
             padding: 3px 10px;
             border-radius: 20px;
             font-size: 12px;
+            margin-right: 8px;
+        }
+
+        .random-badge {
+            background: #8e44ad;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            margin-left: 6px;
         }
 
         textarea {
             width: 100%;
-            height: 200px;
+            height: 160px;
             font-family: monospace;
             font-size: 14px;
             padding: 10px;
             border: 2px solid #ddd;
             border-radius: 8px;
             margin: 10px 0;
+            box-sizing: border-box;
         }
 
-        button {
+        .button-row {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .submit-btn {
             background: #27ae60;
             color: white;
-            padding: 12px 30px;
+            padding: 10px 25px;
             border: none;
             border-radius: 8px;
-            font-size: 16px;
+            font-size: 15px;
             cursor: pointer;
         }
 
-        button:hover {
-            background: #219a52;
+        .submit-btn:hover { background: #219a52; }
+
+        .hint-btn {
+            background: #f39c12;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .hint-btn:hover { background: #d68910; }
+
+        .hint-box {
+            background: #fef9e7;
+            border: 1px solid #f39c12;
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 10px;
+            display: none;
+            font-size: 14px;
         }
 
         .result-box {
             padding: 15px;
             border-radius: 8px;
-            margin-top: 20px;
+            margin-top: 10px;
             display: none;
+            font-size: 15px;
         }
 
         .success {
@@ -80,27 +145,85 @@
             border: 1px solid #e74c3c;
             color: #721c24;
         }
+
+        .points-bar {
+            background: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #ddd;
+        }
+
+        .points-bar span {
+            font-size: 18px;
+            font-weight: bold;
+            color: #27ae60;
+        }
+
+        .stage-complete {
+            background: #27ae60;
+            color: white;
+            text-align: center;
+            padding: 30px;
+            border-radius: 8px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .stage-complete h2 { margin: 0 0 10px; font-size: 28px; }
+
+        .next-btn {
+            background: white;
+            color: #27ae60;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 15px;
+        }
     </style>
 </head>
 <body>
 
     <a href="/" class="back-link">← Back to Challenges</a>
 
-    <div class="challenge-box">
-        <h1>Hello World in Go</h1>
-        <span class="badge">Beginner</span>
-        <span style="margin-left: 10px; color: #27ae60; font-weight: bold;">10 pts</span>
-
-        <h3>The Challenge</h3>
-        <p>Write a Go program that prints exactly this to the screen:</p>
-        <pre>Hello, World!</pre>
-
-        <h3>Example Output</h3>
-        <pre>Hello, World!</pre>
+    <div class="points-bar">
+        <div>⭐ Stage 1 — Printing in Go</div>
+        <div>Your Points: <span id="pointsDisplay">0</span></div>
     </div>
 
-    <h3>Write your answer here:</h3>
-    <textarea id="code" placeholder="Type your Go code here...">package main
+    <!-- LESSON -->
+    <div class="lesson-box">
+        <h2>📖 Lesson: How to Print in Go</h2>
+        <p>In Go, when you want to show something on the screen, you use <code>fmt.Println()</code>. Whatever you put inside the brackets with quotes will appear as output.</p>
+        <p>Here is the basic structure of every Go program:</p>
+        <pre>package main
+
+import "fmt"
+
+func main() {
+    fmt.Println("anything you want to print")
+}</pre>
+        <p>👆 You will use this same structure for every step. Just change what is inside <code>fmt.Println()</code>.</p>
+    </div>
+
+    <!-- STEP 1 — RANDOMISED -->
+    <div class="step-box active" id="step1">
+        <h3>
+            <span class="step-number">Step 1 of 3</span>
+            Print your assigned letter
+            <span class="random-badge">🎲 Random</span>
+        </h3>
+        <p>Your question is different from other students. Write a Go program that prints exactly this letter:</p>
+        <pre id="assignedLetter">?</pre>
+        <p><strong>Tip:</strong> Use one <code>fmt.Println()</code> with your assigned letter inside quotes.</p>
+
+        <textarea id="code1" placeholder="Write your Go code here...">package main
 
 import "fmt"
 
@@ -108,26 +231,161 @@ func main() {
     // Write your code here
 }</textarea>
 
-    <br>
-    <button onclick="submitAnswer()">Submit Answer</button>
+        <div class="button-row">
+            <button class="submit-btn" onclick="checkStep1()">Submit Answer</button>
+            <button class="hint-btn" onclick="showHint(1)">💡 Get Hint (-5 pts)</button>
+        </div>
 
-    <div id="result" class="result-box"></div>
+        <div class="hint-box" id="hint1"></div>
+        <div class="result-box" id="result1"></div>
+    </div>
+
+    <!-- STEP 2 — SAME FOR EVERYONE -->
+    <div class="step-box" id="step2">
+        <h3><span class="step-number">Step 2 of 3</span> Print Hello, World!</h3>
+        <p>Now write a Go program that prints exactly this:</p>
+        <pre>Hello, World!</pre>
+        <p><strong>Tip:</strong> The comma and exclamation mark must be exactly right.</p>
+
+        <textarea id="code2" placeholder="Write your Go code here...">package main
+
+import "fmt"
+
+func main() {
+    // Write your code here
+}</textarea>
+
+        <div class="button-row">
+            <button class="submit-btn" onclick="checkStep2()">Submit Answer</button>
+            <button class="hint-btn" onclick="showHint(2)">💡 Get Hint (-5 pts)</button>
+        </div>
+
+        <div class="hint-box" id="hint2">
+            Use <code>fmt.Println("Hello, World!")</code> — check the comma and exclamation mark carefully!
+        </div>
+        <div class="result-box" id="result2"></div>
+    </div>
+
+    <!-- STEP 3 — PERSONAL -->
+    <div class="step-box" id="step3">
+        <h3><span class="step-number">Step 3 of 3</span> Print your name</h3>
+        <p>Last step! Write a Go program that prints your own first name. For example if your name is <strong>Agene</strong>:</p>
+        <pre>Agene</pre>
+
+        <textarea id="code3" placeholder="Write your Go code here...">package main
+
+import "fmt"
+
+func main() {
+    // Write your code here
+}</textarea>
+
+        <div class="button-row">
+            <button class="submit-btn" onclick="checkStep3()">Submit Answer</button>
+            <button class="hint-btn" onclick="showHint(3)">💡 Get Hint (-5 pts)</button>
+        </div>
+
+        <div class="hint-box" id="hint3">
+            Use <code>fmt.Println("YourName")</code> — just replace YourName with your real first name!
+        </div>
+        <div class="result-box" id="result3"></div>
+    </div>
+
+    <!-- STAGE COMPLETE -->
+    <div class="stage-complete" id="stageComplete">
+        <h2>🎉 Stage 1 Complete!</h2>
+        <p>You have mastered printing in Go!</p>
+        <p>Final Points: <strong id="finalPoints">0</strong></p>
+        <button class="next-btn" onclick="window.location.href='/'">← Back to All Challenges</button>
+    </div>
 
     <script>
-        function submitAnswer() {
-            const code = document.getElementById("code").value;
-            const resultBox = document.getElementById("result");
+        // ── Pick a random letter when the page loads ──
+        const letters = ["A", "a", "Z", "z"];
+        const assigned = letters[Math.floor(Math.random() * letters.length)];
 
-            // For now we just check if they mentioned fmt.Println
-            if (code.includes('fmt.Println("Hello, World!")')) {
-                resultBox.className = "result-box success";
-                resultBox.innerText = "✅ Correct! You earned 10 points!";
-            } else {
-                resultBox.className = "result-box error";
-                resultBox.innerText = "❌ Not quite. Make sure you print exactly: Hello, World!";
+        // Show the assigned letter to the student
+        document.getElementById("assignedLetter").textContent = assigned;
+
+        // Set the hint dynamically based on their assigned letter
+        document.getElementById("hint1").innerHTML =
+            'Use <code>fmt.Println("' + assigned + '")</code> — put your assigned letter inside the quotes exactly as shown.';
+
+        // ── Points tracker ──
+        let points = 0;
+        let hintUsed = [false, false, false];
+
+        function updatePoints(add) {
+            points += add;
+            if (points < 0) points = 0;
+            document.getElementById("pointsDisplay").textContent = points;
+        }
+
+        function showHint(step) {
+            if (hintUsed[step - 1]) {
+                alert("You already used the hint for this step!");
+                return;
             }
+            hintUsed[step - 1] = true;
+            updatePoints(-5);
+            document.getElementById("hint" + step).style.display = "block";
+        }
 
-            resultBox.style.display = "block";
+        function showResult(step, passed, message) {
+            const box = document.getElementById("result" + step);
+            box.style.display = "block";
+            box.className = "result-box " + (passed ? "success" : "error");
+            box.textContent = message;
+        }
+
+        function unlockStep(nextStep) {
+            setTimeout(function() {
+                const next = document.getElementById("step" + nextStep);
+                next.classList.add("active");
+                next.scrollIntoView({ behavior: "smooth" });
+            }, 1200);
+        }
+
+        // ── Step 1: check they printed their assigned letter ──
+        function checkStep1() {
+            const code = document.getElementById("code1").value;
+            const expected = 'fmt.Println("' + assigned + '")';
+            if (code.includes(expected)) {
+                updatePoints(10);
+                showResult(1, true, "✅ Correct! You printed " + assigned + " and earned 10 points! Step 2 unlocking...");
+                unlockStep(2);
+            } else {
+                showResult(1, false, '❌ Not quite. Your assigned letter is "' + assigned + '" — make sure you print exactly that.');
+            }
+        }
+
+        // ── Step 2: check Hello, World! ──
+        function checkStep2() {
+            const code = document.getElementById("code2").value;
+            if (code.includes('fmt.Println("Hello, World!")')) {
+                updatePoints(10);
+                showResult(2, true, "✅ Correct! You earned 10 points! Step 3 unlocking...");
+                unlockStep(3);
+            } else {
+                showResult(2, false, "❌ Not quite. Check the spelling, comma and exclamation mark — it must be exactly: Hello, World!");
+            }
+        }
+
+        // ── Step 3: check they printed any name ──
+        function checkStep3() {
+            const code = document.getElementById("code3").value;
+            const match = code.match(/fmt\.Println\("([^"]+)"\)/);
+            if (match && match[1].length > 0) {
+                updatePoints(10);
+                document.getElementById("finalPoints").textContent = points;
+                showResult(3, true, "✅ Well done, " + match[1] + "! You completed Stage 1!");
+                setTimeout(function() {
+                    document.getElementById("stageComplete").style.display = "block";
+                    document.getElementById("stageComplete").scrollIntoView({ behavior: "smooth" });
+                }, 1200);
+            } else {
+                showResult(3, false, "❌ Not quite. Use fmt.Println() and put your name inside the quotes.");
+            }
         }
     </script>
 
