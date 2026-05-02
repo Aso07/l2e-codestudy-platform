@@ -1,84 +1,787 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>L2E CodeStudy Platform - Otukpo Campus</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>L2E CodeStudy Platform — Otukpo Campus</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --bg: #0d1117;
+            --sidebar: #161b22;
+            --card: #1c2128;
+            --card2: #21262d;
+            --border: #30363d;
+            --accent: #00ff88;
+            --accent2: #3b82f6;
+            --accent3: #f59e0b;
+            --accent4: #ec4899;
+            --text: #e6edf3;
+            --muted: #7d8590;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
         body {
-            font-family: Arial, sans-serif;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #f4f4f4;
+            font-family: 'Syne', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            display: flex;
+            min-height: 100vh;
+            cursor: none;
         }
 
-        h1 {
-            color: #2c3e50;
+        /* ── Custom cursor ── */
+        #cursor {
+            width: 12px; height: 12px;
+            background: var(--accent);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.1s ease;
+            mix-blend-mode: screen;
         }
 
-        .challenge-card {
-            background: white;
-            padding: 20px;
-            margin: 10px 0;
+        #cursor-ring {
+            width: 36px; height: 36px;
+            border: 2px solid var(--accent);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9998;
+            opacity: 0.4;
+            transition: left 0.12s ease, top 0.12s ease, transform 0.2s ease;
+        }
+
+        /* ── Sidebar ── */
+        .sidebar {
+            width: 72px;
+            background: var(--sidebar);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 0;
+            gap: 8px;
+            position: fixed;
+            top: 0; left: 0; bottom: 0;
+            z-index: 100;
+        }
+
+        .sidebar-logo {
+            width: 40px; height: 40px;
+            background: var(--accent);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Space Mono', monospace;
+            font-size: 13px;
+            font-weight: 700;
+            color: #000;
+            margin-bottom: 20px;
+            animation: pulse-logo 3s ease infinite;
+        }
+
+        @keyframes pulse-logo {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(0,255,136,0.4); }
+            50% { box-shadow: 0 0 0 8px rgba(0,255,136,0); }
+        }
+
+        .nav-item {
+            width: 48px; height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            cursor: none;
+            transition: background 0.2s, transform 0.2s;
+            position: relative;
+            text-decoration: none;
+            color: var(--muted);
+        }
+
+        .nav-item:hover {
+            background: rgba(0,255,136,0.1);
+            color: var(--accent);
+            transform: scale(1.1);
+        }
+
+        .nav-item.active {
+            background: rgba(0,255,136,0.15);
+            color: var(--accent);
+        }
+
+        .nav-item .tooltip {
+            position: absolute;
+            left: 60px;
+            background: var(--card);
+            color: var(--text);
+            padding: 6px 12px;
             border-radius: 8px;
-            border-left: 5px solid #27ae60;
+            font-size: 12px;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s;
+            border: 1px solid var(--border);
         }
 
-        .badge {
-            background: #27ae60;
-            color: white;
-            padding: 3px 10px;
+        .nav-item:hover .tooltip { opacity: 1; }
+
+        .sidebar-divider {
+            width: 32px;
+            height: 1px;
+            background: var(--border);
+            margin: 8px 0;
+        }
+
+        /* ── Main ── */
+        .main {
+            margin-left: 72px;
+            flex: 1;
+            padding: 24px;
+        }
+
+        /* ── Topbar ── */
+        .topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+        }
+
+        .topbar-left h1 {
+            font-size: 13px;
+            color: var(--muted);
+            font-weight: 400;
+        }
+
+        .topbar-left h2 {
+            font-size: 22px;
+            font-weight: 800;
+        }
+
+        .topbar-left h2 span { color: var(--accent); }
+
+        .campus-badge {
+            background: rgba(0,255,136,0.1);
+            border: 1px solid rgba(0,255,136,0.3);
+            color: var(--accent);
+            padding: 8px 16px;
             border-radius: 20px;
             font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1px;
         }
 
-        .points {
-            float: right;
-            font-weight: bold;
-            color: #27ae60;
+        /* ── Hero ── */
+        .hero {
+            background: linear-gradient(135deg, #1a3a2a 0%, #0d2818 50%, #0a1628 100%);
+            border: 1px solid rgba(0,255,136,0.2);
+            border-radius: 16px;
+            padding: 32px;
+            margin-bottom: 24px;
+            position: relative;
+            overflow: hidden;
+            animation: fadeUp 0.6s ease forwards;
         }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%; right: -10%;
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, rgba(0,255,136,0.08) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 24px;
+            align-items: center;
+        }
+
+        .hero-tag {
+            font-size: 11px;
+            font-family: 'Space Mono', monospace;
+            color: var(--accent);
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+        }
+
+        .hero h2 {
+            font-size: 30px;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 10px;
+        }
+
+        .hero h2 span { color: var(--accent); }
+
+        .hero p {
+            color: var(--muted);
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 24px;
+        }
+
+        .hero-stat {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .hero-stat-icon {
+            width: 40px; height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .green { background: rgba(0,255,136,0.15); }
+        .blue { background: rgba(59,130,246,0.15); }
+
+        .hero-stat-info strong {
+            display: block;
+            font-size: 18px;
+            font-weight: 800;
+        }
+
+        .hero-stat-info span {
+            font-size: 11px;
+            color: var(--muted);
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: #000;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-family: 'Syne', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: none;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: inline-block;
+            text-decoration: none;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0,255,136,0.3);
+        }
+
+        /* ── Content grid ── */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 24px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .section-header h3 {
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .section-header a {
+            font-size: 12px;
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        /* ── Stage cards ── */
+        .stages-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+
+        .stage-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 20px;
+            text-decoration: none;
+            color: var(--text);
+            display: block;
+            transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            animation: fadeUp 0.5s ease forwards;
+        }
+
+        .stage-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+        }
+
+        .stage-card.s1::before { background: var(--accent); }
+        .stage-card.s2::before { background: var(--accent2); }
+        .stage-card.s3::before { background: var(--accent3); }
+        .stage-card.s4::before { background: var(--accent4); }
+
+        .stage-card:nth-child(1) { animation-delay: 0.1s; }
+        .stage-card:nth-child(2) { animation-delay: 0.2s; }
+        .stage-card:nth-child(3) { animation-delay: 0.3s; }
+        .stage-card:nth-child(4) { animation-delay: 0.4s; }
+
+        .stage-card:hover { transform: translateY(-4px); }
+        .stage-card.s1:hover { border-color: rgba(0,255,136,0.4); box-shadow: 0 12px 32px rgba(0,255,136,0.1); }
+        .stage-card.s2:hover { border-color: rgba(59,130,246,0.4); box-shadow: 0 12px 32px rgba(59,130,246,0.1); }
+        .stage-card.s3:hover { border-color: rgba(245,158,11,0.4); box-shadow: 0 12px 32px rgba(245,158,11,0.1); }
+        .stage-card.s4:hover { border-color: rgba(236,72,153,0.4); box-shadow: 0 12px 32px rgba(236,72,153,0.1); }
+
+        .stage-icon {
+            width: 44px; height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            margin-bottom: 14px;
+        }
+
+        .s1 .stage-icon { background: rgba(0,255,136,0.1); }
+        .s2 .stage-icon { background: rgba(59,130,246,0.1); }
+        .s3 .stage-icon { background: rgba(245,158,11,0.1); }
+        .s4 .stage-icon { background: rgba(236,72,153,0.1); }
+
+        .stage-card h4 { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+
+        .stage-card p {
+            font-size: 12px;
+            color: var(--muted);
+            line-height: 1.5;
+            margin-bottom: 14px;
+        }
+
+        .stage-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .stage-badge {
+            font-size: 11px;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .badge-beginner { background: rgba(0,255,136,0.1); color: var(--accent); }
+        .badge-intermediate { background: rgba(245,158,11,0.1); color: var(--accent3); }
+
+        .stage-pts {
+            font-family: 'Space Mono', monospace;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .s1 .stage-pts { color: var(--accent); }
+        .s2 .stage-pts { color: var(--accent2); }
+        .s3 .stage-pts { color: var(--accent3); }
+        .s4 .stage-pts { color: var(--accent4); }
+
+        .stage-arrow {
+            opacity: 0;
+            transition: opacity 0.2s, transform 0.2s;
+        }
+
+        .stage-card:hover .stage-arrow { opacity: 1; transform: translateX(4px); }
+
+        /* ── Right panel ── */
+        .right-panel { display: flex; flex-direction: column; gap: 16px; }
+
+        .stat-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 18px;
+        }
+
+        .stat-card h3 {
+            font-size: 12px;
+            color: var(--muted);
+            margin-bottom: 12px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .stat-row { display: flex; gap: 10px; }
+
+        .stat-box {
+            flex: 1;
+            background: var(--card2);
+            border-radius: 10px;
+            padding: 12px;
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+
+        .stat-box strong {
+            display: block;
+            font-size: 24px;
+            font-weight: 800;
+            font-family: 'Space Mono', monospace;
+            color: var(--accent);
+        }
+
+        .stat-box span { font-size: 10px; color: var(--muted); letter-spacing: 0.5px; }
+
+        /* ── Leaderboard ── */
+        .leaderboard-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 18px;
+        }
+
+        .leaderboard-card h3 {
+            font-size: 12px;
+            color: var(--muted);
+            margin-bottom: 14px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .lb-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .lb-item:last-of-type { border-bottom: none; }
+
+        .lb-rank {
+            font-family: 'Space Mono', monospace;
+            font-size: 12px;
+            font-weight: 700;
+            width: 20px;
+            text-align: center;
+        }
+
+        .lb-avatar {
+            width: 32px; height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: 700;
+            color: #000;
+            flex-shrink: 0;
+        }
+
+        .lb-info { flex: 1; }
+        .lb-info strong { display: block; font-size: 13px; font-weight: 600; }
+        .lb-info span { font-size: 11px; color: var(--muted); }
+
+        .lb-pts {
+            font-family: 'Space Mono', monospace;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .lb-btn {
+            background: var(--card2);
+            border: 1px solid var(--border);
+            color: var(--muted);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            text-decoration: none;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .lb-btn:hover { background: rgba(0,255,136,0.1); color: var(--accent); }
+
+        /* ── Animations ── */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
     </style>
 </head>
 <body>
 
-    <h1>🖥️ L2E CodeStudy Platform</h1>
+    <div id="cursor"></div>
+    <div id="cursor-ring"></div>
 
-<p>Otukpo Campus — Pick a challenge and start coding!</p>
-<a href="/leaderboard.html" style="color: #27ae60; font-weight: bold;">🏆 View Leaderboard</a>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-logo">L2E</div>
 
-    <h2>This Week's Challenges</h2>
-<div class="challenge-card">
-        <span class="points">10 pts</span>
-        <h3><a href="/challenge.html" style="color: #2c3e50; text-decoration: none;">Hello World in Go</a></h3>
-        <p>Write a Go program that prints "Hello, World!" to the screen.</p>
-        <span class="badge">Beginner</span>
-    </div>
+        <a href="/" class="nav-item active">
+            🏠
+            <span class="tooltip">Home</span>
+        </a>
+        <a href="/challenge.html" class="nav-item">
+            ⭐
+            <span class="tooltip">Stage 1 — Printing</span>
+        </a>
+        <a href="/stage2.html" class="nav-item">
+            🔢
+            <span class="tooltip">Stage 2 — Numbers</span>
+        </a>
+        <a href="/stage3.html" class="nav-item">
+            📝
+            <span class="tooltip">Stage 3 — Strings</span>
+        </a>
+        <a href="/stage4.html" class="nav-item">
+            ⚙️
+            <span class="tooltip">Stage 4 — Functions</span>
+        </a>
 
-<div class="challenge-card">
-        <span class="points">50 pts</span>
-        <h3><a href="/stage2.html" style="color: #2c3e50; text-decoration: none;">Stage 2 — Numbers and Loops</a></h3>
-        <p>Print numbers, sequences, even and odd numbers, calculations and rectangle perimeters.</p>
-        <span class="badge">Beginner</span>
-    </div>
+        <div class="sidebar-divider"></div>
 
-<div class="challenge-card">
-        <span class="points">70 pts</span>
-        <h3><a href="/stage3.html" style="color: #2c3e50; text-decoration: none;">Stage 3 — Strings and Text</a></h3>
-        <p>Work with text in Go — string length, counting characters, finding words and checking content.</p>
-        <span class="badge">Intermediate</span>
-    </div>
+        <a href="/leaderboard.html" class="nav-item">
+            🏆
+            <span class="tooltip">Leaderboard</span>
+        </a>
+    </aside>
 
-    <div class="challenge-card">
-        <span class="points">100 pts</span>
-        <h3><a href="/stage4.html" style="color: #2c3e50; text-decoration: none;">Stage 4 — Functions and Conditions</a></h3>
-        <p>Write your own functions, handle multiple conditions and solve real fellowship checkpoint problems.</p>
-        <span class="badge">Intermediate</span>
-    </div>
-    <div class="challenge-card">
-        <span class="points">30 pts</span>
-        <h3>FizzBuzz</h3>
-        <p>Print numbers 1 to 100. For multiples of 3 print Fizz, for multiples of 5 print Buzz.</p>
-        <span class="badge">Intermediate</span>
-    </div>
+    <!-- Main -->
+    <main class="main">
+
+        <div class="topbar">
+            <div class="topbar-left">
+                <h1>Good day, fellow 👋</h1>
+                <h2>L2E <span>CodeStudy</span> Platform</h2>
+            </div>
+            <div>
+                <span class="campus-badge">📍 OTUKPO CAMPUS</span>
+            </div>
+        </div>
+
+        <!-- Hero -->
+        <div class="hero">
+            <div class="hero-grid">
+                <div>
+                    <div class="hero-tag">// LEARN · CODE · EARN</div>
+                    <h2>Level up your<br><span>Go programming</span><br>skills today</h2>
+                    <p>Complete challenges, earn points and climb the leaderboard. Every stage makes you a better developer.</p>
+                    <div class="hero-stats">
+                        <div class="hero-stat">
+                            <div class="hero-stat-icon green">👩‍💻</div>
+                            <div class="hero-stat-info">
+                                <strong>4</strong>
+                                <span>Active Stages</span>
+                            </div>
+                        </div>
+                        <div class="hero-stat">
+                            <div class="hero-stat-icon blue">⭐</div>
+                            <div class="hero-stat-info">
+                                <strong>250+</strong>
+                                <span>Points Available</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div style="text-align:right">
+                    <p style="color:var(--muted); font-size:13px; margin-bottom:12px;">Ready to start?</p>
+                    <a href="/challenge.html" class="btn-primary">Start Stage 1 →</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content grid -->
+        <div class="content-grid">
+
+            <div>
+                <div class="section-header">
+                    <h3>All Stages</h3>
+                    <a href="/leaderboard.html">View Leaderboard →</a>
+                </div>
+
+                <div class="stages-grid">
+
+                    <a href="/challenge.html" class="stage-card s1">
+                        <div class="stage-icon">🖨️</div>
+                        <h4>Stage 1 — Printing in Go</h4>
+                        <p>Learn fmt.Println(), print letters, Hello World and your own name.</p>
+                        <div class="stage-footer">
+                            <span class="stage-badge badge-beginner">Beginner</span>
+                            <span class="stage-pts">30 pts</span>
+                            <span class="stage-arrow">→</span>
+                        </div>
+                    </a>
+
+                    <a href="/stage2.html" class="stage-card s2">
+                        <div class="stage-icon">🔢</div>
+                        <h4>Stage 2 — Numbers & Loops</h4>
+                        <p>Print numbers, sequences, even/odd, calculations and perimeters.</p>
+                        <div class="stage-footer">
+                            <span class="stage-badge badge-beginner">Beginner</span>
+                            <span class="stage-pts">50 pts</span>
+                            <span class="stage-arrow">→</span>
+                        </div>
+                    </a>
+
+                    <a href="/stage3.html" class="stage-card s3">
+                        <div class="stage-icon">📝</div>
+                        <h4>Stage 3 — Strings & Text</h4>
+                        <p>String length, counting characters, finding words and checking content.</p>
+                        <div class="stage-footer">
+                            <span class="stage-badge badge-intermediate">Intermediate</span>
+                            <span class="stage-pts">70 pts</span>
+                            <span class="stage-arrow">→</span>
+                        </div>
+                    </a>
+
+                    <a href="/stage4.html" class="stage-card s4">
+                        <div class="stage-icon">⚙️</div>
+                        <h4>Stage 4 — Functions</h4>
+                        <p>Write your own functions, handle conditions and solve fellowship checkpoints.</p>
+                        <div class="stage-footer">
+                            <span class="stage-badge badge-intermediate">Intermediate</span>
+                            <span class="stage-pts">100 pts</span>
+                            <span class="stage-arrow">→</span>
+                        </div>
+                    </a>
+
+                </div>
+            </div>
+
+            <!-- Right panel -->
+            <div class="right-panel">
+
+                <div class="stat-card">
+                    <h3>CAMPUS STATS</h3>
+                    <div class="stat-row">
+                        <div class="stat-box">
+                            <strong>4</strong>
+                            <span>STAGES</span>
+                        </div>
+                        <div class="stat-box">
+                            <strong>20</strong>
+                            <span>QUESTIONS</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="leaderboard-card">
+                    <h3>🏆 TOP STUDENTS</h3>
+
+                    <div class="lb-item">
+                        <span class="lb-rank" style="color:#f59e0b">🥇</span>
+                        <div class="lb-avatar" style="background:#f59e0b">A</div>
+                        <div class="lb-info">
+                            <strong>Amaka Okoye</strong>
+                            <span>12 solved</span>
+                        </div>
+                        <span class="lb-pts">240</span>
+                        <a href="/leaderboard.html" class="lb-btn">View</a>
+                    </div>
+
+                    <div class="lb-item">
+                        <span class="lb-rank" style="color:#94a3b8">🥈</span>
+                        <div class="lb-avatar" style="background:#3b82f6">C</div>
+                        <div class="lb-info">
+                            <strong>Chukwuemeka</strong>
+                            <span>10 solved</span>
+                        </div>
+                        <span class="lb-pts">200</span>
+                        <a href="/leaderboard.html" class="lb-btn">View</a>
+                    </div>
+
+                    <div class="lb-item">
+                        <span class="lb-rank" style="color:#cd7c4a">🥉</span>
+                        <div class="lb-avatar" style="background:#ec4899">B</div>
+                        <div class="lb-info">
+                            <strong>Blessing Adah</strong>
+                            <span>8 solved</span>
+                        </div>
+                        <span class="lb-pts">160</span>
+                        <a href="/leaderboard.html" class="lb-btn">View</a>
+                    </div>
+
+                    <div class="lb-item">
+                        <span class="lb-rank" style="color:var(--muted)">4</span>
+                        <div class="lb-avatar" style="background:#8b5cf6">I</div>
+                        <div class="lb-info">
+                            <strong>Ibrahim Musa</strong>
+                            <span>7 solved</span>
+                        </div>
+                        <span class="lb-pts">140</span>
+                        <a href="/leaderboard.html" class="lb-btn">View</a>
+                    </div>
+
+                    <div class="lb-item">
+                        <span class="lb-rank" style="color:var(--muted)">5</span>
+                        <div class="lb-avatar" style="background:#00ff88; color:#000">C</div>
+                        <div class="lb-info">
+                            <strong>Chidinma Ogbu</strong>
+                            <span>6 solved</span>
+                        </div>
+                        <span class="lb-pts">120</span>
+                        <a href="/leaderboard.html" class="lb-btn">View</a>
+                    </div>
+
+                    <br>
+                    <a href="/leaderboard.html" class="btn-primary" style="width:100%; text-align:center; display:block;">Full Leaderboard →</a>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const cursor = document.getElementById('cursor');
+        const ring = document.getElementById('cursor-ring');
+
+        document.addEventListener('mousemove', e => {
+            cursor.style.left = (e.clientX - 6) + 'px';
+            cursor.style.top = (e.clientY - 6) + 'px';
+            ring.style.left = (e.clientX - 18) + 'px';
+            ring.style.top = (e.clientY - 18) + 'px';
+        });
+
+        document.querySelectorAll('a, button').forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursor.style.transform = 'scale(2)';
+                ring.style.transform = 'scale(1.4)';
+                ring.style.opacity = '0.8';
+            });
+            el.addEventListener('mouseleave', () => {
+                cursor.style.transform = 'scale(1)';
+                ring.style.transform = 'scale(1)';
+                ring.style.opacity = '0.4';
+            });
+        });
+
+        document.addEventListener('click', () => {
+            cursor.style.transform = 'scale(0.5)';
+            setTimeout(() => cursor.style.transform = 'scale(1)', 150);
+        });
+    </script>
 
 </body>
 </html>
