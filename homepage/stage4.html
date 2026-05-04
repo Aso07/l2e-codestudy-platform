@@ -41,429 +41,106 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        body {
-            font-family: 'Syne', sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            display: flex;
-            min-height: 100vh;
-            cursor: none;
-            transition: background 0.3s, color 0.3s;
-        }
+        body { font-family: 'Syne', sans-serif; background: var(--bg); color: var(--text); display: flex; min-height: 100vh; cursor: none; transition: background 0.3s, color 0.3s; }
 
-        #cursor {
-            width: 12px; height: 12px;
-            background: var(--accent);
-            border-radius: 50%;
-            position: fixed;
-            pointer-events: none;
-            z-index: 9999;
-            transition: transform 0.1s ease;
-            mix-blend-mode: screen;
-        }
-
+        #cursor { width: 12px; height: 12px; background: var(--accent); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9999; transition: transform 0.1s ease; mix-blend-mode: screen; }
         body.light #cursor { mix-blend-mode: multiply; }
+        #cursor-ring { width: 36px; height: 36px; border: 2px solid var(--accent); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9998; opacity: 0.4; transition: left 0.12s ease, top 0.12s ease, transform 0.2s ease; }
 
-        #cursor-ring {
-            width: 36px; height: 36px;
-            border: 2px solid var(--accent);
-            border-radius: 50%;
-            position: fixed;
-            pointer-events: none;
-            z-index: 9998;
-            opacity: 0.4;
-            transition: left 0.12s ease, top 0.12s ease, transform 0.2s ease;
-        }
+        .sidebar { width: 72px; background: var(--sidebar); border-right: 1px solid var(--border); display: flex; flex-direction: column; align-items: center; padding: 20px 0; gap: 8px; position: fixed; top: 0; left: 0; bottom: 0; z-index: 100; transition: background 0.3s, border-color 0.3s; }
 
-        .sidebar {
-            width: 72px;
-            background: var(--sidebar);
-            border-right: 1px solid var(--border);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px 0;
-            gap: 8px;
-            position: fixed;
-            top: 0; left: 0; bottom: 0;
-            z-index: 100;
-            transition: background 0.3s, border-color 0.3s;
-        }
-
-        .sidebar-logo {
-            width: 40px; height: 40px;
-            background: var(--accent);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Space Mono', monospace;
-            font-size: 13px;
-            font-weight: 700;
-            color: #fff;
-            margin-bottom: 20px;
-            animation: pulse-logo 3s ease infinite;
-        }
+        .sidebar-logo { width: 40px; height: 40px; background: var(--accent); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-family: 'Space Mono', monospace; font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 20px; animation: pulse-logo 3s ease infinite; }
 
         @keyframes pulse-logo {
             0%, 100% { box-shadow: 0 0 0 0 rgba(236,72,153,0.4); }
             50% { box-shadow: 0 0 0 8px rgba(236,72,153,0); }
         }
 
-        .nav-item {
-            width: 48px; height: 48px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            cursor: none;
-            transition: background 0.2s, transform 0.2s;
-            position: relative;
-            text-decoration: none;
-            color: var(--muted);
-        }
+        .nav-item { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; cursor: none; transition: background 0.2s, transform 0.2s; position: relative; text-decoration: none; color: var(--muted); }
+        .nav-item:hover { background: rgba(236,72,153,0.1); color: var(--accent); transform: scale(1.1); }
+        .nav-item.active { background: rgba(236,72,153,0.15); color: var(--accent); }
 
-        .nav-item:hover {
-            background: rgba(236,72,153,0.1);
-            color: var(--accent);
-            transform: scale(1.1);
-        }
-
-        .nav-item.active {
-            background: rgba(236,72,153,0.15);
-            color: var(--accent);
-        }
-
-        .nav-item .tooltip {
-            position: absolute;
-            left: 60px;
-            background: var(--card);
-            color: var(--text);
-            padding: 6px 12px;
-            border-radius: 8px;
-            font-size: 12px;
-            white-space: nowrap;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.2s;
-            border: 1px solid var(--border);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        }
-
+        .nav-item .tooltip { position: absolute; left: 60px; background: var(--card); color: var(--text); padding: 6px 12px; border-radius: 8px; font-size: 12px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.2s; border: 1px solid var(--border); box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
         .nav-item:hover .tooltip { opacity: 1; }
         .sidebar-divider { width: 32px; height: 1px; background: var(--border); margin: 8px 0; }
+        .sidebar-bottom { margin-top: auto; display: flex; flex-direction: column; align-items: center; gap: 8px; padding-bottom: 8px; }
 
-        .sidebar-bottom {
-            margin-top: auto;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-            padding-bottom: 8px;
-        }
-
-        .settings-panel {
-            position: fixed;
-            left: 80px;
-            bottom: 20px;
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 16px;
-            width: 200px;
-            display: none;
-            z-index: 200;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-            animation: fadeUp 0.2s ease forwards;
-        }
-
+        .settings-panel { position: fixed; left: 80px; bottom: 20px; background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 16px; width: 200px; display: none; z-index: 200; box-shadow: 0 8px 32px rgba(0,0,0,0.3); }
         .settings-panel.open { display: block; }
         .settings-panel h4 { font-size: 12px; color: var(--muted); letter-spacing: 1px; margin-bottom: 12px; font-weight: 600; }
         .setting-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
         .setting-row span { font-size: 13px; color: var(--text); }
-
-        .toggle {
-            width: 40px; height: 22px;
-            background: var(--border);
-            border-radius: 20px;
-            position: relative;
-            cursor: none;
-            transition: background 0.2s;
-        }
-
+        .toggle { width: 40px; height: 22px; background: var(--border); border-radius: 20px; position: relative; cursor: none; transition: background 0.2s; }
         .toggle.on { background: var(--accent); }
-
-        .toggle::after {
-            content: '';
-            width: 16px; height: 16px;
-            background: white;
-            border-radius: 50%;
-            position: absolute;
-            top: 3px; left: 3px;
-            transition: left 0.2s;
-        }
-
+        .toggle::after { content: ''; width: 16px; height: 16px; background: white; border-radius: 50%; position: absolute; top: 3px; left: 3px; transition: left 0.2s; }
         .toggle.on::after { left: 21px; }
 
-        .main {
-            margin-left: 72px;
-            flex: 1;
-            padding: 24px;
-            max-width: 860px;
-            transition: background 0.3s;
-        }
+        .main { margin-left: 72px; flex: 1; padding: 24px; max-width: 860px; transition: background 0.3s; }
 
-        .points-bar {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 14px 20px;
-            margin-bottom: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            animation: fadeUp 0.4s ease forwards;
-            transition: background 0.3s, border-color 0.3s;
-        }
-
+        .points-bar { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 14px 20px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; transition: background 0.3s, border-color 0.3s; }
         .points-bar h2 { font-size: 16px; font-weight: 700; }
         .points-bar h2 span { color: var(--accent); }
         .points-display { font-family: 'Space Mono', monospace; font-size: 18px; font-weight: 700; color: var(--accent); }
 
         .progress-wrap { background: var(--card2); border-radius: 20px; height: 6px; margin-bottom: 24px; overflow: hidden; }
+        .progress-fill { background: var(--accent); height: 6px; border-radius: 20px; width: 0%; transition: width 0.6s ease; box-shadow: 0 0 10px rgba(236,72,153,0.5); }
 
-        .progress-fill {
-            background: var(--accent);
-            height: 6px;
-            border-radius: 20px;
-            width: 0%;
-            transition: width 0.6s ease;
-            box-shadow: 0 0 10px rgba(236,72,153,0.5);
-        }
-
-        .lesson-box {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-left: 4px solid var(--accent);
-            border-radius: 12px;
-            padding: 20px 24px;
-            margin-bottom: 20px;
-            animation: fadeUp 0.5s ease forwards;
-            transition: background 0.3s, border-color 0.3s;
-        }
-
+        .lesson-box { background: var(--card); border: 1px solid var(--border); border-left: 4px solid var(--accent); border-radius: 12px; padding: 20px 24px; margin-bottom: 20px; transition: background 0.3s, border-color 0.3s; }
         .lesson-box h2 { color: var(--accent); font-size: 15px; margin-bottom: 12px; font-weight: 700; }
         .lesson-box p { color: var(--muted); font-size: 14px; line-height: 1.7; margin-bottom: 10px; }
 
-        .lesson-box code, .step-lesson code {
-            background: rgba(236,72,153,0.1);
-            color: var(--accent);
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-family: 'Space Mono', monospace;
-            font-size: 13px;
-        }
+        .lesson-box code, .step-lesson code { background: rgba(236,72,153,0.1); color: var(--accent); padding: 2px 8px; border-radius: 4px; font-family: 'Space Mono', monospace; font-size: 13px; }
 
-        .lesson-box pre, .step-box pre, .step-lesson pre {
-            background: #010409;
-            border: 1px solid var(--border);
-            color: #ec4899;
-            padding: 14px;
-            border-radius: 10px;
-            font-family: 'Space Mono', monospace;
-            font-size: 13px;
-            margin-top: 10px;
-            overflow-x: auto;
-            line-height: 1.6;
-        }
+        .lesson-box pre, .step-box pre, .step-lesson pre { background: #010409; border: 1px solid var(--border); color: #ec4899; padding: 14px; border-radius: 10px; font-family: 'Space Mono', monospace; font-size: 13px; margin-top: 10px; overflow-x: auto; line-height: 1.6; }
+        body.light .lesson-box pre, body.light .step-box pre, body.light .step-lesson pre { background: #fdf2f8; color: #be185d; }
 
-        body.light .lesson-box pre,
-        body.light .step-box pre,
-        body.light .step-lesson pre {
-            background: #fdf2f8;
-            color: #be185d;
-        }
-
-        .step-box {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 24px;
-            margin-bottom: 16px;
-            display: none;
-            animation: fadeUp 0.5s ease forwards;
-            transition: background 0.3s, border-color 0.3s;
-        }
-
+        .step-box { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 24px; margin-bottom: 16px; display: none; animation: fadeUp 0.5s ease forwards; transition: background 0.3s, border-color 0.3s; }
         .step-box.active { display: block; }
         .step-header { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
-
-        .step-number {
-            background: rgba(236,72,153,0.15);
-            color: var(--accent);
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 700;
-            font-family: 'Space Mono', monospace;
-        }
-
+        .step-number { background: rgba(236,72,153,0.15); color: var(--accent); padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; font-family: 'Space Mono', monospace; }
         .random-badge { background: rgba(139,92,246,0.15); color: #a78bfa; padding: 4px 10px; border-radius: 20px; font-size: 11px; }
-
         .step-box h3 { font-size: 16px; font-weight: 700; margin-bottom: 14px; }
         .step-box p { color: var(--muted); font-size: 14px; line-height: 1.6; margin-bottom: 10px; }
 
-        .step-lesson {
-            background: rgba(236,72,153,0.04);
-            border: 1px solid rgba(236,72,153,0.15);
-            border-radius: 10px;
-            padding: 14px 16px;
-            margin-bottom: 16px;
-            font-size: 13px;
-            color: var(--muted);
-            line-height: 1.7;
-            transition: background 0.3s;
-        }
-
+        .step-lesson { background: rgba(236,72,153,0.04); border: 1px solid rgba(236,72,153,0.15); border-radius: 10px; padding: 14px 16px; margin-bottom: 16px; font-size: 13px; color: var(--muted); line-height: 1.7; }
         .step-lesson strong { color: var(--accent); }
 
-        textarea {
-            width: 100%;
-            height: 200px;
-            background: #010409;
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            color: #ec4899;
-            font-family: 'Space Mono', monospace;
-            font-size: 13px;
-            padding: 14px;
-            margin: 10px 0;
-            resize: vertical;
-            outline: none;
-            transition: border-color 0.2s, background 0.3s;
-        }
-
+        textarea { width: 100%; height: 200px; background: #010409; border: 1px solid var(--border); border-radius: 10px; color: #ec4899; font-family: 'Space Mono', monospace; font-size: 13px; padding: 14px; margin: 10px 0; resize: vertical; outline: none; transition: border-color 0.2s, background 0.3s; }
         body.light textarea { background: #fdf2f8; color: #be185d; }
         textarea:focus { border-color: rgba(236,72,153,0.5); }
 
         .button-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 4px; }
 
-        .submit-btn {
-            background: var(--accent);
-            color: #fff;
-            border: none;
-            padding: 10px 24px;
-            border-radius: 8px;
-            font-family: 'Syne', sans-serif;
-            font-size: 14px;
-            font-weight: 700;
-            cursor: none;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
+        .submit-btn { background: var(--accent); color: #fff; border: none; padding: 10px 24px; border-radius: 8px; font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700; cursor: none; transition: transform 0.2s, box-shadow 0.2s; }
         .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(236,72,153,0.3); }
+        .submit-btn:disabled { opacity: 0.5; }
 
-        .hint-btn {
-            background: rgba(245,158,11,0.1);
-            color: #f59e0b;
-            border: 1px solid rgba(245,158,11,0.3);
-            padding: 10px 20px;
-            border-radius: 8px;
-            font-family: 'Syne', sans-serif;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: none;
-            transition: background 0.2s;
-        }
-
+        .hint-btn { background: rgba(245,158,11,0.1); color: #f59e0b; border: 1px solid rgba(245,158,11,0.3); padding: 10px 20px; border-radius: 8px; font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 600; cursor: none; transition: background 0.2s; }
         .hint-btn:hover { background: rgba(245,158,11,0.2); }
 
-        .hint-box {
-            background: rgba(245,158,11,0.05);
-            border: 1px solid rgba(245,158,11,0.3);
-            border-radius: 10px;
-            padding: 12px 16px;
-            margin-top: 12px;
-            display: none;
-            font-size: 13px;
-            color: #f59e0b;
-            font-family: 'Space Mono', monospace;
-        }
+        .hint-box { background: rgba(245,158,11,0.05); border: 1px solid rgba(245,158,11,0.3); border-radius: 10px; padding: 12px 16px; margin-top: 12px; display: none; font-size: 13px; color: #f59e0b; font-family: 'Space Mono', monospace; }
 
-        .result-box {
-            padding: 14px 18px;
-            border-radius: 10px;
-            margin-top: 12px;
-            display: none;
-            font-size: 14px;
-            font-weight: 600;
-            animation: fadeUp 0.3s ease forwards;
-        }
-
+        .result-box { padding: 14px 18px; border-radius: 10px; margin-top: 12px; display: none; font-size: 14px; font-weight: 600; }
         .success { background: var(--success); border: 1px solid var(--success-border); color: var(--success-text); }
         .error { background: var(--error); border: 1px solid var(--error-border); color: var(--error-text); }
 
-        .stage-complete {
-            background: linear-gradient(135deg, #3a0a2a, #200510);
-            border: 1px solid rgba(236,72,153,0.3);
-            border-radius: 16px;
-            padding: 40px;
-            text-align: center;
-            display: none;
-            animation: fadeUp 0.5s ease forwards;
-        }
+        .running-msg { padding: 14px 18px; border-radius: 10px; margin-top: 12px; font-size: 14px; color: var(--muted); font-family: 'Space Mono', monospace; display: none; border: 1px solid var(--border); }
 
+        .stage-complete { background: linear-gradient(135deg, #3a0a2a, #200510); border: 1px solid rgba(236,72,153,0.3); border-radius: 16px; padding: 40px; text-align: center; display: none; animation: fadeUp 0.5s ease forwards; }
         body.light .stage-complete { background: linear-gradient(135deg, #fce7f3, #fdf2f8); border-color: rgba(236,72,153,0.4); }
-
         .stage-complete h2 { font-size: 32px; font-weight: 800; color: var(--accent); margin-bottom: 10px; }
         .stage-complete p { color: var(--muted); margin-bottom: 6px; }
         .stage-complete strong { color: var(--text); font-size: 18px; }
 
         .complete-buttons { display: flex; gap: 12px; justify-content: center; margin-top: 20px; flex-wrap: wrap; }
 
-        .next-btn {
-            background: var(--accent);
-            color: #fff;
-            border: none;
-            padding: 14px 32px;
-            border-radius: 10px;
-            font-family: 'Syne', sans-serif;
-            font-size: 15px;
-            font-weight: 700;
-            cursor: none;
-            transition: transform 0.2s, box-shadow 0.2s;
-            display: inline-block;
-            text-decoration: none;
-        }
-
+        .next-btn { background: var(--accent); color: #fff; border: none; padding: 14px 32px; border-radius: 10px; font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700; cursor: none; transition: transform 0.2s, box-shadow 0.2s; display: inline-block; text-decoration: none; }
         .next-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(236,72,153,0.3); }
 
-        .home-btn {
-            background: transparent;
-            color: var(--muted);
-            border: 1px solid var(--border);
-            padding: 14px 32px;
-            border-radius: 10px;
-            font-family: 'Syne', sans-serif;
-            font-size: 15px;
-            font-weight: 700;
-            cursor: none;
-            transition: background 0.2s, color 0.2s;
-            display: inline-block;
-            text-decoration: none;
-        }
-
+        .home-btn { background: transparent; color: var(--muted); border: 1px solid var(--border); padding: 14px 32px; border-radius: 10px; font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700; cursor: none; transition: background 0.2s, color 0.2s; display: inline-block; text-decoration: none; }
         .home-btn:hover { background: var(--card2); color: var(--text); }
 
-        .confetti-piece {
-            position: fixed;
-            width: 8px; height: 8px;
-            border-radius: 2px;
-            pointer-events: none;
-            z-index: 9999;
-            animation: confettiFall linear forwards;
-        }
+        .confetti-piece { position: fixed; width: 8px; height: 8px; border-radius: 2px; pointer-events: none; z-index: 9999; animation: confettiFall linear forwards; }
 
         @keyframes confettiFall {
             0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
@@ -491,7 +168,7 @@
         <a href="/challenge.html" class="nav-item">⭐<span class="tooltip">Stage 1</span></a>
         <a href="/stage2.html" class="nav-item">🔢<span class="tooltip">Stage 2</span></a>
         <a href="/stage3.html" class="nav-item">📝<span class="tooltip">Stage 3</span></a>
-        <a href="/stage4.html" class="nav-item active">🔧<span class="tooltip">Stage 4</span></a>
+        <a href="/stage4.html" class="nav-item active">🧩<span class="tooltip">Stage 4</span></a>
         <div class="sidebar-divider"></div>
         <a href="/leaderboard.html" class="nav-item">🏆<span class="tooltip">Leaderboard</span></a>
         <div class="sidebar-bottom">
@@ -512,7 +189,7 @@
     <main class="main">
 
         <div class="points-bar">
-            <h2>🔧 Stage 4 — <span>Functions & Conditions</span></h2>
+            <h2>🧩 Stage 4 — <span>Functions & Conditions</span></h2>
             <div class="points-display">⚡ <span id="pointsDisplay">0</span> pts</div>
         </div>
 
@@ -526,24 +203,16 @@
             <pre>func add(a int, b int) int {
     return a + b
 }
-
 func main() {
     fmt.Println(add(3, 5))  // prints: 8
 }</pre>
-            <p>An <strong>if/else</strong> condition lets your program make decisions:</p>
-            <pre>number := 15
-if number > 10 {
-    fmt.Println("big")
-} else {
-    fmt.Println("small")
-}</pre>
-            <p>Chain multiple conditions with <code>else if</code> and use <code>&&</code> for AND, <code>||</code> for OR:</p>
+            <p>An <strong>if/else</strong> lets your program make decisions. Chain multiple with <code>else if</code>:</p>
             <pre>if n%2 == 0 && n%3 == 0 {
-    fmt.Println("divisible by both")
+    fmt.Println("both")
 } else if n%2 == 0 {
-    fmt.Println("divisible by 2 only")
+    fmt.Println("two only")
 } else if n%3 == 0 {
-    fmt.Println("divisible by 3 only")
+    fmt.Println("three only")
 } else {
     fmt.Println("neither")
 }</pre>
@@ -564,7 +233,6 @@ if number > 10 {
 } else {
     fmt.Println("small")
 }</pre>
-                Change the number and condition to match your question!
             </div>
             <p id="q1Text">Your task will appear here.</p>
             <pre id="q1Expected">?</pre>
@@ -576,9 +244,10 @@ func main() {
     // Write your code here
 }</textarea>
             <div class="button-row">
-                <button class="submit-btn" onclick="checkStep1()">▶ Submit</button>
+                <button class="submit-btn" id="btn1" onclick="checkStep1()">▶ Run & Submit</button>
                 <button class="hint-btn" onclick="showHint(1)">💡 Hint (-5 pts)</button>
             </div>
+            <div class="running-msg" id="running1">⏳ Running your code...</div>
             <div class="hint-box" id="hint1"></div>
             <div class="result-box" id="result1"></div>
         </div>
@@ -591,7 +260,7 @@ func main() {
             </div>
             <h3>Multiple conditions — Fish and Chips</h3>
             <div class="step-lesson">
-                <strong>📖 How to do this:</strong> Always check the most specific condition first — divisible by BOTH before checking them separately:
+                <strong>📖 How to do this:</strong> Always check the most specific condition first — both before individual:
                 <pre>if n%2 == 0 && n%3 == 0 {
     fmt.Println("fish and chips")
 } else if n%2 == 0 {
@@ -601,7 +270,6 @@ func main() {
 } else {
     fmt.Println("neither")
 }</pre>
-                <code>&&</code> means AND — both conditions must be true!
             </div>
             <p id="q2Text">Your task will appear here.</p>
             <pre id="q2Expected">?</pre>
@@ -613,9 +281,10 @@ func main() {
     // Write your code here
 }</textarea>
             <div class="button-row">
-                <button class="submit-btn" onclick="checkStep2()">▶ Submit</button>
+                <button class="submit-btn" id="btn2" onclick="checkStep2()">▶ Run & Submit</button>
                 <button class="hint-btn" onclick="showHint(2)">💡 Hint (-5 pts)</button>
             </div>
+            <div class="running-msg" id="running2">⏳ Running your code...</div>
             <div class="hint-box" id="hint2"></div>
             <div class="result-box" id="result2"></div>
         </div>
@@ -629,14 +298,12 @@ func main() {
             <h3>Write your own function</h3>
             <div class="step-lesson">
                 <strong>📖 How to do this:</strong> A function takes inputs, does something, and returns a result:
-                <pre>func functionName(a int, b int) int {
+                <pre>func add(a int, b int) int {
     return a + b
 }
-
 func main() {
-    fmt.Println(functionName(3, 4))  // prints: 7
+    fmt.Println(add(3, 4))  // prints: 7
 }</pre>
-                The word after the brackets is the return type. <code>int</code> means it returns a number!
             </div>
             <p id="q3Text">Your task will appear here.</p>
             <pre id="q3Expected">?</pre>
@@ -650,9 +317,10 @@ func main() {
     // Call your function here
 }</textarea>
             <div class="button-row">
-                <button class="submit-btn" onclick="checkStep3()">▶ Submit</button>
+                <button class="submit-btn" id="btn3" onclick="checkStep3()">▶ Run & Submit</button>
                 <button class="hint-btn" onclick="showHint(3)">💡 Hint (-5 pts)</button>
             </div>
+            <div class="running-msg" id="running3">⏳ Running your code...</div>
             <div class="hint-box" id="hint3"></div>
             <div class="result-box" id="result3"></div>
         </div>
@@ -665,19 +333,13 @@ func main() {
             </div>
             <h3>Function with string condition — PrintIf</h3>
             <div class="step-lesson">
-                <strong>📖 How to do this:</strong> A function can take a string and return a different string based on a condition. This is directly from your fellowship checkpoint!
+                <strong>📖 How to do this:</strong> A function can return different strings based on conditions. This is your fellowship PrintIf checkpoint!
                 <pre>func PrintIf(str string) string {
     if len(str) >= 3 || str == "" {
         return "G"
     }
     return "Invalid Input"
-}
-
-func main() {
-    fmt.Println(PrintIf("hello"))  // prints: G
-    fmt.Println(PrintIf("hi"))     // prints: Invalid Input
 }</pre>
-                <code>||</code> means OR — at least one condition must be true!
             </div>
             <p id="q4Text">Your task will appear here.</p>
             <pre id="q4Expected">?</pre>
@@ -691,9 +353,10 @@ func main() {
     // Test your function here
 }</textarea>
             <div class="button-row">
-                <button class="submit-btn" onclick="checkStep4()">▶ Submit</button>
+                <button class="submit-btn" id="btn4" onclick="checkStep4()">▶ Run & Submit</button>
                 <button class="hint-btn" onclick="showHint(4)">💡 Hint (-5 pts)</button>
             </div>
+            <div class="running-msg" id="running4">⏳ Running your code...</div>
             <div class="hint-box" id="hint4"></div>
             <div class="result-box" id="result4"></div>
         </div>
@@ -706,7 +369,7 @@ func main() {
             </div>
             <h3>Full FishAndChips function</h3>
             <div class="step-lesson">
-                <strong>📖 How to do this:</strong> Now combine everything — write a complete function that handles all cases including negative numbers. This is your fellowship's FishAndChips checkpoint!
+                <strong>📖 How to do this:</strong> The complete fellowship FishAndChips checkpoint — handle ALL cases including negative numbers:
                 <pre>func FishAndChips(n int) string {
     if n < 0 {
         return "error: number is negative"
@@ -720,7 +383,6 @@ func main() {
         return "error: non divisible"
     }
 }</pre>
-                Study this carefully — it is a real checkpoint solution!
             </div>
             <p id="q5Text">Your task will appear here.</p>
             <pre id="q5Expected">?</pre>
@@ -734,9 +396,10 @@ func main() {
     // Test your function here
 }</textarea>
             <div class="button-row">
-                <button class="submit-btn" onclick="checkStep5()">▶ Submit</button>
+                <button class="submit-btn" id="btn5" onclick="checkStep5()">▶ Run & Submit</button>
                 <button class="hint-btn" onclick="showHint(5)">💡 Hint (-5 pts)</button>
             </div>
+            <div class="running-msg" id="running5">⏳ Running your code...</div>
             <div class="hint-box" id="hint5"></div>
             <div class="result-box" id="result5"></div>
         </div>
@@ -802,38 +465,38 @@ func main() {
 
         // Question pools
         const q1Pool = [
-            { text: 'Write a program that checks if 15 is greater than 10. If yes print "big", if no print "small":', expected: "big", check: c => c.includes("15") && c.includes("> 10") && c.includes('"big"'), hint: 'number := 15 \n if number > 10 { fmt.Println("big") } else { fmt.Println("small") }' },
-            { text: 'Write a program that checks if 5 is greater than 10. If yes print "big", if no print "small":', expected: "small", check: c => c.includes("5") && c.includes("> 10") && c.includes('"small"'), hint: 'number := 5 \n if number > 10 { fmt.Println("big") } else { fmt.Println("small") }' },
-            { text: 'Write a program that checks if 8 is even or odd. Print "even" or "odd":', expected: "even", check: c => c.includes("8") && c.includes("% 2") && c.includes('"even"'), hint: 'number := 8 \n if number % 2 == 0 { fmt.Println("even") } else { fmt.Println("odd") }' },
-            { text: 'Write a program that checks if 7 is even or odd. Print "even" or "odd":', expected: "odd", check: c => c.includes("7") && c.includes("% 2") && c.includes('"odd"'), hint: 'number := 7 \n if number % 2 == 0 { fmt.Println("even") } else { fmt.Println("odd") }' },
+            { text: 'Write a program: if 15 > 10 print "big", else print "small":', expected: "big", hint: 'number := 15\nif number > 10 { fmt.Println("big") } else { fmt.Println("small") }' },
+            { text: 'Write a program: if 5 > 10 print "big", else print "small":', expected: "small", hint: 'number := 5\nif number > 10 { fmt.Println("big") } else { fmt.Println("small") }' },
+            { text: 'Write a program: if 8 is even print "even", else print "odd":', expected: "even", hint: 'number := 8\nif number % 2 == 0 { fmt.Println("even") } else { fmt.Println("odd") }' },
+            { text: 'Write a program: if 7 is even print "even", else print "odd":', expected: "odd", hint: 'number := 7\nif number % 2 == 0 { fmt.Println("even") } else { fmt.Println("odd") }' },
         ];
 
         const q2Pool = [
-            { text: 'For the number 6: divisible by both 2 and 3 → "fish and chips", by 2 only → "fish", by 3 only → "chips", else → "neither":', expected: "fish and chips", check: c => c.includes("6") && c.includes("% 2") && c.includes("% 3") && c.includes('"fish and chips"'), hint: 'n := 6. Check n%2==0 && n%3==0 first, then n%2==0, then n%3==0, then else' },
-            { text: 'For the number 4: divisible by both 2 and 3 → "fish and chips", by 2 only → "fish", by 3 only → "chips", else → "neither":', expected: "fish", check: c => c.includes("4") && c.includes("% 2") && c.includes('"fish"'), hint: 'n := 4. 4 is only divisible by 2 — check n%2==0 && n%3==0 first!' },
-            { text: 'For the number 9: divisible by both 2 and 3 → "fish and chips", by 2 only → "fish", by 3 only → "chips", else → "neither":', expected: "chips", check: c => c.includes("9") && c.includes("% 3") && c.includes('"chips"'), hint: 'n := 9. 9 is only divisible by 3!' },
-            { text: 'For the number 7: divisible by both 2 and 3 → "fish and chips", by 2 only → "fish", by 3 only → "chips", else → "neither":', expected: "neither", check: c => c.includes("7") && c.includes("% 2") && c.includes("% 3") && c.includes('"neither"'), hint: 'n := 7. 7 is not divisible by 2 or 3 — falls to else!' },
+            { text: 'For n=6: divisible by both 2&3 → "fish and chips", by 2 → "fish", by 3 → "chips", else → "neither". Print the result:', expected: "fish and chips", hint: 'n := 6\nCheck n%2==0 && n%3==0 first!' },
+            { text: 'For n=4: divisible by both 2&3 → "fish and chips", by 2 → "fish", by 3 → "chips", else → "neither". Print the result:', expected: "fish", hint: 'n := 4\n4 is only divisible by 2!' },
+            { text: 'For n=9: divisible by both 2&3 → "fish and chips", by 2 → "fish", by 3 → "chips", else → "neither". Print the result:', expected: "chips", hint: 'n := 9\n9 is only divisible by 3!' },
+            { text: 'For n=7: divisible by both 2&3 → "fish and chips", by 2 → "fish", by 3 → "chips", else → "neither". Print the result:', expected: "neither", hint: 'n := 7\n7 is not divisible by 2 or 3!' },
         ];
 
         const q3Pool = [
-            { text: 'Write a function called add that takes two numbers and returns their sum. Call it with 3 and 5 and print the result:', expected: "8", check: c => c.includes("func add") && c.includes("return") && c.includes("add(3, 5)"), hint: 'func add(a int, b int) int { return a + b } then fmt.Println(add(3, 5))' },
-            { text: 'Write a function called multiply that takes two numbers and returns their product. Call it with 4 and 6 and print the result:', expected: "24", check: c => c.includes("func multiply") && c.includes("return") && c.includes("multiply(4, 6)"), hint: 'func multiply(a int, b int) int { return a * b } then fmt.Println(multiply(4, 6))' },
-            { text: 'Write a function called bigger that returns the larger of two numbers. Call it with 10 and 7 and print the result:', expected: "10", check: c => c.includes("func bigger") && c.includes("return") && c.includes("bigger(10, 7)"), hint: 'func bigger(a int, b int) int { if a > b { return a } return b }' },
-            { text: 'Write a function called smaller that returns the smaller of two numbers. Call it with 10 and 7 and print the result:', expected: "7", check: c => c.includes("func smaller") && c.includes("return") && c.includes("smaller(10, 7)"), hint: 'func smaller(a int, b int) int { if a < b { return a } return b }' },
+            { text: 'Write a function called add(a, b int) that returns their sum. Call add(3, 5) and print the result:', expected: "8", hint: 'func add(a int, b int) int { return a + b }\nfmt.Println(add(3, 5))' },
+            { text: 'Write a function called multiply(a, b int) that returns their product. Call multiply(4, 6) and print the result:', expected: "24", hint: 'func multiply(a int, b int) int { return a * b }\nfmt.Println(multiply(4, 6))' },
+            { text: 'Write a function called bigger(a, b int) that returns the larger number. Call bigger(10, 7) and print the result:', expected: "10", hint: 'func bigger(a int, b int) int { if a > b { return a } return b }' },
+            { text: 'Write a function called smaller(a, b int) that returns the smaller number. Call smaller(10, 7) and print the result:', expected: "7", hint: 'func smaller(a int, b int) int { if a < b { return a } return b }' },
         ];
 
         const q4Pool = [
-            { text: 'Write a PrintIf function: if string has 3+ letters OR is empty return "G", else return "Invalid Input". Test with "hello":', expected: "G", check: c => c.includes("func PrintIf") && c.includes("len(") && c.includes('>= 3') && c.includes('"G"'), hint: 'func PrintIf(str string) string { if len(str) >= 3 || str == "" { return "G" } return "Invalid Input" }' },
-            { text: 'Write a PrintIf function: if string has 3+ letters OR is empty return "G", else return "Invalid Input". Test with "hi":', expected: "Invalid Input", check: c => c.includes("func PrintIf") && c.includes("len(") && c.includes('"Invalid Input"'), hint: '"hi" has only 2 letters — it returns "Invalid Input"' },
-            { text: 'Write a PrintIf function: if string has 3+ letters OR is empty return "G", else return "Invalid Input". Test with "Go":', expected: "Invalid Input", check: c => c.includes("func PrintIf") && c.includes("len(") && c.includes('"Invalid Input"'), hint: '"Go" has only 2 letters — it returns "Invalid Input"' },
-            { text: 'Write a PrintIf function: if string has 3+ letters OR is empty return "G", else return "Invalid Input". Test with "":', expected: "G", check: c => c.includes("func PrintIf") && c.includes('str == ""') && c.includes('"G"'), hint: 'Empty string "" triggers the OR condition — returns "G"' },
+            { text: 'Write PrintIf(str string) string: returns "G" if len >= 3 or empty, else "Invalid Input". Call PrintIf("hello") and print:', expected: "G", hint: 'func PrintIf(str string) string { if len(str) >= 3 || str == "" { return "G" } return "Invalid Input" }' },
+            { text: 'Write PrintIf(str string) string: returns "G" if len >= 3 or empty, else "Invalid Input". Call PrintIf("hi") and print:', expected: "Invalid Input", hint: '"hi" has only 2 letters — returns "Invalid Input"' },
+            { text: 'Write PrintIf(str string) string: returns "G" if len >= 3 or empty, else "Invalid Input". Call PrintIf("Go") and print:', expected: "Invalid Input", hint: '"Go" has only 2 letters — returns "Invalid Input"' },
+            { text: 'Write PrintIf(str string) string: returns "G" if len >= 3 or empty, else "Invalid Input". Call PrintIf("") and print:', expected: "G", hint: 'Empty string triggers the || condition — returns "G"' },
         ];
 
         const q5Pool = [
-            { text: 'Write the full FishAndChips function. Handle: negative → error, both 2&3 → fish and chips, 2 only → fish, 3 only → chips, else → error. Test with 6:', expected: "fish and chips", check: c => c.includes("func FishAndChips") && c.includes("n < 0") && c.includes('"fish and chips"') && c.includes("FishAndChips(6)"), hint: 'Check n < 0 first, then n%2==0 && n%3==0, then n%2==0, then n%3==0, then else. Call FishAndChips(6)' },
-            { text: 'Write the full FishAndChips function and test it with -3:', expected: "error: number is negative", check: c => c.includes("func FishAndChips") && c.includes("n < 0") && c.includes('"error: number is negative"') && c.includes("FishAndChips(-3)"), hint: 'First check: if n < 0 { return "error: number is negative" }. Call FishAndChips(-3)' },
-            { text: 'Write the full FishAndChips function and test it with 4:', expected: "fish", check: c => c.includes("func FishAndChips") && c.includes("n%2 == 0") && c.includes('"fish"') && c.includes("FishAndChips(4)"), hint: '4 is divisible by 2 but not 3 — returns "fish". Call FishAndChips(4)' },
-            { text: 'Write the full FishAndChips function and test it with 7:', expected: "error: non divisible", check: c => c.includes("func FishAndChips") && c.includes('"error: non divisible"') && c.includes("FishAndChips(7)"), hint: '7 is not divisible by 2 or 3 — falls to last else. Call FishAndChips(7)' },
+            { text: 'Write FishAndChips(n int): negative → "error: number is negative", both 2&3 → "fish and chips", 2 only → "fish", 3 only → "chips", else → "error: non divisible". Call FishAndChips(6) and print:', expected: "fish and chips", hint: 'Check n < 0 first, then n%2==0 && n%3==0, then individual divisibility' },
+            { text: 'Write FishAndChips(n int) with all cases. Call FishAndChips(-3) and print:', expected: "error: number is negative", hint: 'First check: if n < 0 { return "error: number is negative" }' },
+            { text: 'Write FishAndChips(n int) with all cases. Call FishAndChips(4) and print:', expected: "fish", hint: '4 is divisible by 2 but not 3 — returns "fish"' },
+            { text: 'Write FishAndChips(n int) with all cases. Call FishAndChips(7) and print:', expected: "error: non divisible", hint: '7 is not divisible by 2 or 3 — falls to last else' },
         ];
 
         function pick(pool) { return pool[Math.floor(Math.random() * pool.length)]; }
@@ -889,6 +552,11 @@ func main() {
             box.textContent = message;
         }
 
+        function setRunning(step, isRunning) {
+            document.getElementById("running" + step).style.display = isRunning ? "block" : "none";
+            document.getElementById("btn" + step).disabled = isRunning;
+        }
+
         function unlockStep(next) {
             setTimeout(() => {
                 const el = document.getElementById("step" + next);
@@ -911,65 +579,62 @@ func main() {
             }
         }
 
-        function checkStep1() {
-            const code = document.getElementById("code1").value;
-            if (q1.check(code)) {
-                updatePoints(10); updateProgress();
-                showResult(1, true, '✅ Correct! The answer is "' + q1.expected + '". You earned 10 points! Step 2 unlocking...');
-                unlockStep(2);
-            } else {
-                showResult(1, false, '❌ Not quite. Check your condition and make sure you are printing the right word!');
+        // Piston API
+        async function runGoCode(code) {
+            const res = await fetch("https://emkc.org/api/v2/piston/execute", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    language: "go",
+                    version: "1.20.0",
+                    files: [{ content: code }]
+                })
+            });
+            return await res.json();
+        }
+
+        async function checkStep(stepNum, expected, isLast) {
+            const code = document.getElementById("code" + stepNum).value;
+            setRunning(stepNum, true);
+            try {
+                const result = await runGoCode(code);
+                const output = (result.run?.stdout || "").trim();
+                const stderr = (result.run?.stderr || "").trim();
+                setRunning(stepNum, false);
+
+                if (stderr) {
+                    showResult(stepNum, false, "❌ Your code has an error: " + stderr.split('\n')[0]);
+                    return;
+                }
+
+                if (output === expected.trim()) {
+                    updatePoints(isLast ? 20 : 10); updateProgress();
+                    if (isLast) {
+                        document.getElementById("finalPoints").textContent = points;
+                        showResult(stepNum, true, "✅ Correct! Output: " + output + " — You earned 20 points for completing Stage 4!");
+                        launchConfetti();
+                        setTimeout(() => {
+                            document.getElementById("stageComplete").style.display = "block";
+                            document.getElementById("stageComplete").scrollIntoView({ behavior: "smooth" });
+                        }, 1200);
+                    } else {
+                        showResult(stepNum, true, "✅ Correct! Output: " + output + " — You earned 10 points! Next step unlocking...");
+                        unlockStep(stepNum + 1);
+                    }
+                } else {
+                    showResult(stepNum, false, '❌ Your output: "' + output + '" — Expected: "' + expected.trim() + '"');
+                }
+            } catch (err) {
+                setRunning(stepNum, false);
+                showResult(stepNum, false, "❌ Could not connect to code runner. Check your internet and try again.");
             }
         }
 
-        function checkStep2() {
-            const code = document.getElementById("code2").value;
-            if (q2.check(code)) {
-                updatePoints(10); updateProgress();
-                showResult(2, true, '✅ Correct! The answer is "' + q2.expected + '". You earned 10 points! Step 3 unlocking...');
-                unlockStep(3);
-            } else {
-                showResult(2, false, '❌ Not quite. Check divisibility by both 2 AND 3 first before checking them separately!');
-            }
-        }
-
-        function checkStep3() {
-            const code = document.getElementById("code3").value;
-            if (q3.check(code)) {
-                updatePoints(10); updateProgress();
-                showResult(3, true, '✅ Correct! Your function works perfectly! You earned 10 points! Step 4 unlocking...');
-                unlockStep(4);
-            } else {
-                showResult(3, false, '❌ Not quite. Make sure your function name matches exactly and you call it with the right numbers!');
-            }
-        }
-
-        function checkStep4() {
-            const code = document.getElementById("code4").value;
-            if (q4.check(code)) {
-                updatePoints(10); updateProgress();
-                showResult(4, true, '✅ Correct! PrintIf works perfectly! You earned 10 points! Step 5 unlocking...');
-                unlockStep(5);
-            } else {
-                showResult(4, false, '❌ Not quite. Check your function name is PrintIf and your conditions use len() and || correctly!');
-            }
-        }
-
-        function checkStep5() {
-            const code = document.getElementById("code5").value;
-            if (q5.check(code)) {
-                updatePoints(20); updateProgress();
-                document.getElementById("finalPoints").textContent = points;
-                showResult(5, true, '✅ Excellent! FishAndChips returns "' + q5.expected + '"! You earned 20 points for completing Stage 4!');
-                launchConfetti();
-                setTimeout(() => {
-                    document.getElementById("stageComplete").style.display = "block";
-                    document.getElementById("stageComplete").scrollIntoView({ behavior: "smooth" });
-                }, 1200);
-            } else {
-                showResult(5, false, '❌ Not quite. Make sure your function is named FishAndChips exactly and handles all cases including negative numbers!');
-            }
-        }
+        function checkStep1() { checkStep(1, q1.expected, false); }
+        function checkStep2() { checkStep(2, q2.expected, false); }
+        function checkStep3() { checkStep(3, q3.expected, false); }
+        function checkStep4() { checkStep(4, q4.expected, false); }
+        function checkStep5() { checkStep(5, q5.expected, true); }
     </script>
 </body>
 </html>

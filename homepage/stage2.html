@@ -75,7 +75,6 @@
             transition: left 0.12s ease, top 0.12s ease, transform 0.2s ease;
         }
 
-        /* Sidebar */
         .sidebar {
             width: 72px;
             background: var(--sidebar);
@@ -125,16 +124,8 @@
             color: var(--muted);
         }
 
-        .nav-item:hover {
-            background: rgba(59,130,246,0.1);
-            color: var(--accent);
-            transform: scale(1.1);
-        }
-
-        .nav-item.active {
-            background: rgba(59,130,246,0.15);
-            color: var(--accent);
-        }
+        .nav-item:hover { background: rgba(59,130,246,0.1); color: var(--accent); transform: scale(1.1); }
+        .nav-item.active { background: rgba(59,130,246,0.15); color: var(--accent); }
 
         .nav-item .tooltip {
             position: absolute;
@@ -153,12 +144,7 @@
         }
 
         .nav-item:hover .tooltip { opacity: 1; }
-
-        .sidebar-divider {
-            width: 32px; height: 1px;
-            background: var(--border);
-            margin: 8px 0;
-        }
+        .sidebar-divider { width: 32px; height: 1px; background: var(--border); margin: 8px 0; }
 
         .sidebar-bottom {
             margin-top: auto;
@@ -169,7 +155,6 @@
             padding-bottom: 8px;
         }
 
-        /* Settings panel */
         .settings-panel {
             position: fixed;
             left: 80px;
@@ -182,30 +167,12 @@
             display: none;
             z-index: 200;
             box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-            animation: fadeUp 0.2s ease forwards;
         }
 
         .settings-panel.open { display: block; }
-
-        .settings-panel h4 {
-            font-size: 12px;
-            color: var(--muted);
-            letter-spacing: 1px;
-            margin-bottom: 12px;
-            font-weight: 600;
-        }
-
-        .setting-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 10px;
-        }
-
-        .setting-row span {
-            font-size: 13px;
-            color: var(--text);
-        }
+        .settings-panel h4 { font-size: 12px; color: var(--muted); letter-spacing: 1px; margin-bottom: 12px; font-weight: 600; }
+        .setting-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+        .setting-row span { font-size: 13px; color: var(--text); }
 
         .toggle {
             width: 40px; height: 22px;
@@ -217,7 +184,6 @@
         }
 
         .toggle.on { background: var(--accent); }
-
         .toggle::after {
             content: '';
             width: 16px; height: 16px;
@@ -227,10 +193,8 @@
             top: 3px; left: 3px;
             transition: left 0.2s;
         }
-
         .toggle.on::after { left: 21px; }
 
-        /* Main */
         .main {
             margin-left: 72px;
             flex: 1;
@@ -248,28 +212,14 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            animation: fadeUp 0.4s ease forwards;
             transition: background 0.3s, border-color 0.3s;
         }
 
         .points-bar h2 { font-size: 16px; font-weight: 700; }
         .points-bar h2 span { color: var(--accent); }
+        .points-display { font-family: 'Space Mono', monospace; font-size: 18px; font-weight: 700; color: var(--accent); }
 
-        .points-display {
-            font-family: 'Space Mono', monospace;
-            font-size: 18px;
-            font-weight: 700;
-            color: var(--accent);
-        }
-
-        .progress-wrap {
-            background: var(--card2);
-            border-radius: 20px;
-            height: 6px;
-            margin-bottom: 24px;
-            overflow: hidden;
-        }
-
+        .progress-wrap { background: var(--card2); border-radius: 20px; height: 6px; margin-bottom: 24px; overflow: hidden; }
         .progress-fill {
             background: var(--accent);
             height: 6px;
@@ -286,7 +236,6 @@
             border-radius: 12px;
             padding: 20px 24px;
             margin-bottom: 20px;
-            animation: fadeUp 0.5s ease forwards;
             transition: background 0.3s, border-color 0.3s;
         }
 
@@ -317,10 +266,7 @@
 
         body.light .lesson-box pre,
         body.light .step-box pre,
-        body.light .step-lesson pre {
-            background: #f0f4ff;
-            color: #1d4ed8;
-        }
+        body.light .step-lesson pre { background: #eff6ff; color: #1d4ed8; }
 
         .step-box {
             background: var(--card);
@@ -334,13 +280,7 @@
         }
 
         .step-box.active { display: block; }
-
-        .step-header {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 16px;
-        }
+        .step-header { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
 
         .step-number {
             background: rgba(59,130,246,0.15);
@@ -352,13 +292,7 @@
             font-family: 'Space Mono', monospace;
         }
 
-        .random-badge {
-            background: rgba(139,92,246,0.15);
-            color: #a78bfa;
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 11px;
-        }
+        .random-badge { background: rgba(139,92,246,0.15); color: #a78bfa; padding: 4px 10px; border-radius: 20px; font-size: 11px; }
 
         .step-box h3 { font-size: 16px; font-weight: 700; margin-bottom: 14px; }
         .step-box p { color: var(--muted); font-size: 14px; line-height: 1.6; margin-bottom: 10px; }
@@ -372,7 +306,6 @@
             font-size: 13px;
             color: var(--muted);
             line-height: 1.7;
-            transition: background 0.3s;
         }
 
         .step-lesson strong { color: var(--accent); }
@@ -393,11 +326,7 @@
             transition: border-color 0.2s, background 0.3s;
         }
 
-        body.light textarea {
-            background: #f0f4ff;
-            color: #1d4ed8;
-        }
-
+        body.light textarea { background: #eff6ff; color: #1d4ed8; }
         textarea:focus { border-color: rgba(59,130,246,0.5); }
 
         .button-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 4px; }
@@ -415,10 +344,8 @@
             transition: transform 0.2s, box-shadow 0.2s;
         }
 
-        .submit-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(59,130,246,0.3);
-        }
+        .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(59,130,246,0.3); }
+        .submit-btn:disabled { opacity: 0.5; }
 
         .hint-btn {
             background: rgba(245,158,11,0.1);
@@ -454,14 +381,24 @@
             display: none;
             font-size: 14px;
             font-weight: 600;
-            animation: fadeUp 0.3s ease forwards;
         }
 
         .success { background: var(--success); border: 1px solid var(--success-border); color: var(--success-text); }
         .error { background: var(--error); border: 1px solid var(--error-border); color: var(--error-text); }
 
+        .running-msg {
+            padding: 14px 18px;
+            border-radius: 10px;
+            margin-top: 12px;
+            font-size: 14px;
+            color: var(--muted);
+            font-family: 'Space Mono', monospace;
+            display: none;
+            border: 1px solid var(--border);
+        }
+
         .stage-complete {
-            background: linear-gradient(135deg, #1a3a5a, #0d2040);
+            background: linear-gradient(135deg, #1a2a4a, #0d1828);
             border: 1px solid rgba(59,130,246,0.3);
             border-radius: 16px;
             padding: 40px;
@@ -470,14 +407,13 @@
             animation: fadeUp 0.5s ease forwards;
         }
 
-        body.light .stage-complete {
-            background: linear-gradient(135deg, #dbeafe, #eff6ff);
-            border-color: rgba(59,130,246,0.3);
-        }
+        body.light .stage-complete { background: linear-gradient(135deg, #dbeafe, #eff6ff); border-color: rgba(59,130,246,0.3); }
 
         .stage-complete h2 { font-size: 32px; font-weight: 800; color: var(--accent); margin-bottom: 10px; }
         .stage-complete p { color: var(--muted); margin-bottom: 6px; }
         .stage-complete strong { color: var(--text); font-size: 18px; }
+
+        .complete-buttons { display: flex; gap: 12px; justify-content: center; margin-top: 20px; flex-wrap: wrap; }
 
         .next-btn {
             background: var(--accent);
@@ -489,7 +425,6 @@
             font-size: 15px;
             font-weight: 700;
             cursor: none;
-            margin-top: 20px;
             transition: transform 0.2s, box-shadow 0.2s;
             display: inline-block;
             text-decoration: none;
@@ -497,12 +432,26 @@
 
         .next-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(59,130,246,0.3); }
 
+        .home-btn {
+            background: transparent;
+            color: var(--muted);
+            border: 1px solid var(--border);
+            padding: 14px 32px;
+            border-radius: 10px;
+            font-family: 'Syne', sans-serif;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: none;
+            transition: background 0.2s, color 0.2s;
+            display: inline-block;
+            text-decoration: none;
+        }
+
+        .home-btn:hover { background: var(--card2); color: var(--text); }
+
         .confetti-piece {
-            position: fixed;
-            width: 8px; height: 8px;
-            border-radius: 2px;
-            pointer-events: none;
-            z-index: 9999;
+            position: fixed; width: 8px; height: 8px;
+            border-radius: 2px; pointer-events: none; z-index: 9999;
             animation: confettiFall linear forwards;
         }
 
@@ -526,14 +475,13 @@
     <div id="cursor"></div>
     <div id="cursor-ring"></div>
 
-    <!-- Sidebar -->
     <aside class="sidebar">
         <div class="sidebar-logo">L2E</div>
         <a href="/" class="nav-item">🏠<span class="tooltip">Home</span></a>
         <a href="/challenge.html" class="nav-item">⭐<span class="tooltip">Stage 1</span></a>
         <a href="/stage2.html" class="nav-item active">🔢<span class="tooltip">Stage 2</span></a>
         <a href="/stage3.html" class="nav-item">📝<span class="tooltip">Stage 3</span></a>
-        <a href="/stage4.html" class="nav-item">⚙️<span class="tooltip">Stage 4</span></a>
+        <a href="/stage4.html" class="nav-item">🧩<span class="tooltip">Stage 4</span></a>
         <div class="sidebar-divider"></div>
         <a href="/leaderboard.html" class="nav-item">🏆<span class="tooltip">Leaderboard</span></a>
         <div class="sidebar-bottom">
@@ -543,7 +491,6 @@
         </div>
     </aside>
 
-    <!-- Settings panel -->
     <div class="settings-panel" id="settingsPanel">
         <h4>⚙ SETTINGS</h4>
         <div class="setting-row">
@@ -563,7 +510,6 @@
             <div class="progress-fill" id="progressBar"></div>
         </div>
 
-        <!-- Main lesson -->
         <div class="lesson-box">
             <h2>📖 Lesson: Numbers, Loops and Calculations in Go</h2>
             <p>In Go, you can print numbers directly with <code>fmt.Println()</code>. No quotes needed for numbers!</p>
@@ -576,7 +522,7 @@ fmt.Println(20 / 4)   // prints: 5</pre>
 }</pre>
             <p>To check if a number is even or odd, use <code>%</code> which gives the remainder:</p>
             <pre>if i % 2 == 0 {
-    fmt.Println(i)   // only prints even numbers
+    fmt.Println(i)
 }</pre>
         </div>
 
@@ -591,7 +537,7 @@ fmt.Println(20 / 4)   // prints: 5</pre>
                 <strong>📖 How to do this:</strong> Numbers in Go do not need quotes. Just put the number directly inside <code>fmt.Println()</code>:
                 <pre>fmt.Println(42)   // prints the number 42</pre>
             </div>
-            <p>Your assigned number is different from other students. Print exactly this:</p>
+            <p>Your assigned number is different from other students. Print exactly:</p>
             <pre id="q1Display">?</pre>
             <textarea id="code1">package main
 
@@ -601,9 +547,10 @@ func main() {
     // Write your code here
 }</textarea>
             <div class="button-row">
-                <button class="submit-btn" onclick="checkStep1()">▶ Submit</button>
+                <button class="submit-btn" id="btn1" onclick="checkStep1()">▶ Run & Submit</button>
                 <button class="hint-btn" onclick="showHint(1)">💡 Hint (-5 pts)</button>
             </div>
+            <div class="running-msg" id="running1">⏳ Running your code...</div>
             <div class="hint-box" id="hint1"></div>
             <div class="result-box" id="result1"></div>
         </div>
@@ -616,11 +563,11 @@ func main() {
             </div>
             <h3>Print a number sequence</h3>
             <div class="step-lesson">
-                <strong>📖 How to do this:</strong> A <code>for</code> loop repeats code multiple times. Here is the structure:
+                <strong>📖 How to do this:</strong> A <code>for</code> loop repeats code multiple times:
                 <pre>for i := 1; i <= 5; i++ {
     fmt.Println(i)
 }</pre>
-                Start at 1, keep going while i is less than or equal to your target number, add 1 each time!
+                Start at 1, keep going while i is less than or equal to your target, add 1 each time!
             </div>
             <p id="q2Text">Your task will appear here.</p>
             <pre id="q2Expected">?</pre>
@@ -632,9 +579,10 @@ func main() {
     // Write your code here
 }</textarea>
             <div class="button-row">
-                <button class="submit-btn" onclick="checkStep2()">▶ Submit</button>
+                <button class="submit-btn" id="btn2" onclick="checkStep2()">▶ Run & Submit</button>
                 <button class="hint-btn" onclick="showHint(2)">💡 Hint (-5 pts)</button>
             </div>
+            <div class="running-msg" id="running2">⏳ Running your code...</div>
             <div class="hint-box" id="hint2"></div>
             <div class="result-box" id="result2"></div>
         </div>
@@ -647,13 +595,13 @@ func main() {
             </div>
             <h3>Print even or odd numbers</h3>
             <div class="step-lesson">
-                <strong>📖 How to do this:</strong> The <code>%</code> symbol gives the remainder of a division. If remainder is 0 the number is even, if 1 it is odd:
+                <strong>📖 How to do this:</strong> Use <code>%</code> to check remainder. 0 means even, 1 means odd:
                 <pre>for i := 1; i <= 10; i++ {
     if i % 2 == 0 {
-        fmt.Println(i)  // even numbers only
+        fmt.Println(i)
     }
 }</pre>
-                To get odd numbers change <code>== 0</code> to <code>!= 0</code>
+                Change <code>== 0</code> to <code>!= 0</code> for odd numbers!
             </div>
             <p id="q3Text">Your task will appear here.</p>
             <pre id="q3Expected">?</pre>
@@ -665,9 +613,10 @@ func main() {
     // Write your code here
 }</textarea>
             <div class="button-row">
-                <button class="submit-btn" onclick="checkStep3()">▶ Submit</button>
+                <button class="submit-btn" id="btn3" onclick="checkStep3()">▶ Run & Submit</button>
                 <button class="hint-btn" onclick="showHint(3)">💡 Hint (-5 pts)</button>
             </div>
+            <div class="running-msg" id="running3">⏳ Running your code...</div>
             <div class="hint-box" id="hint3"></div>
             <div class="result-box" id="result3"></div>
         </div>
@@ -680,10 +629,9 @@ func main() {
             </div>
             <h3>Print a calculation result</h3>
             <div class="step-lesson">
-                <strong>📖 How to do this:</strong> You can put a calculation directly inside <code>fmt.Println()</code> and Go calculates it automatically:
+                <strong>📖 How to do this:</strong> Put the calculation directly inside <code>fmt.Println()</code>:
                 <pre>fmt.Println(8 + 5)   // prints 13
-fmt.Println(4 * 6)   // prints 24
-fmt.Println(20 / 4)  // prints 5</pre>
+fmt.Println(4 * 6)   // prints 24</pre>
                 Symbols: <code>+</code> add &nbsp; <code>-</code> subtract &nbsp; <code>*</code> multiply &nbsp; <code>/</code> divide
             </div>
             <p id="q4Text">Your task will appear here.</p>
@@ -696,9 +644,10 @@ func main() {
     // Write your code here
 }</textarea>
             <div class="button-row">
-                <button class="submit-btn" onclick="checkStep4()">▶ Submit</button>
+                <button class="submit-btn" id="btn4" onclick="checkStep4()">▶ Run & Submit</button>
                 <button class="hint-btn" onclick="showHint(4)">💡 Hint (-5 pts)</button>
             </div>
+            <div class="running-msg" id="running4">⏳ Running your code...</div>
             <div class="hint-box" id="hint4"></div>
             <div class="result-box" id="result4"></div>
         </div>
@@ -711,12 +660,11 @@ func main() {
             </div>
             <h3>Calculate a rectangle perimeter</h3>
             <div class="step-lesson">
-                <strong>📖 How to do this:</strong> A variable in Go stores a value. The <code>:=</code> symbol creates a new variable. Perimeter formula is <strong>2 × (width + height)</strong>:
+                <strong>📖 How to do this:</strong> Use variables to store values. Perimeter = <strong>2 × (width + height)</strong>:
                 <pre>w := 3
 h := 4
 p := 2 * (w + h)
 fmt.Println(p)   // prints 14</pre>
-                Just change w and h to match your assigned values!
             </div>
             <p id="q5Text">Your task will appear here.</p>
             <pre id="q5Expected">?</pre>
@@ -728,9 +676,10 @@ func main() {
     // Write your code here
 }</textarea>
             <div class="button-row">
-                <button class="submit-btn" onclick="checkStep5()">▶ Submit</button>
+                <button class="submit-btn" id="btn5" onclick="checkStep5()">▶ Run & Submit</button>
                 <button class="hint-btn" onclick="showHint(5)">💡 Hint (-5 pts)</button>
             </div>
+            <div class="running-msg" id="running5">⏳ Running your code...</div>
             <div class="hint-box" id="hint5"></div>
             <div class="result-box" id="result5"></div>
         </div>
@@ -740,13 +689,16 @@ func main() {
             <h2>🎉 Stage 2 Complete!</h2>
             <p>You have mastered numbers and loops in Go!</p>
             <p>Final Points: <strong id="finalPoints">0</strong></p>
-            <a href="/" class="next-btn">← Back to All Stages</a>
+            <div class="complete-buttons">
+                <a href="/stage3.html" class="next-btn">Stage 3 — Strings →</a>
+                <a href="/" class="home-btn">← Back to Home</a>
+            </div>
         </div>
 
     </main>
 
     <script>
-        // ── Theme ──────────────────────────────────────────
+        // Theme
         const savedTheme = localStorage.getItem('l2e-theme');
         if (savedTheme === 'light') {
             document.body.classList.add('light');
@@ -772,7 +724,7 @@ func main() {
             }
         });
 
-        // ── Cursor ─────────────────────────────────────────
+        // Cursor
         const cursor = document.getElementById('cursor');
         const ring = document.getElementById('cursor-ring');
         document.addEventListener('mousemove', e => {
@@ -790,40 +742,40 @@ func main() {
             setTimeout(() => cursor.style.transform = 'scale(1)', 150);
         });
 
-        // ── Question pools ─────────────────────────────────
+        // Question pools
         const q1Pool = [
-            { display: "7",   check: c => c.includes("fmt.Println(7)"),   hint: 'Use fmt.Println(7) — no quotes for numbers!' },
-            { display: "42",  check: c => c.includes("fmt.Println(42)"),  hint: 'Use fmt.Println(42) — no quotes for numbers!' },
-            { display: "100", check: c => c.includes("fmt.Println(100)"), hint: 'Use fmt.Println(100) — no quotes for numbers!' },
-            { display: "256", check: c => c.includes("fmt.Println(256)"), hint: 'Use fmt.Println(256) — no quotes for numbers!' },
+            { display: "7",   expected: "7",   hint: 'Use fmt.Println(7) — no quotes for numbers!' },
+            { display: "42",  expected: "42",  hint: 'Use fmt.Println(42) — no quotes for numbers!' },
+            { display: "100", expected: "100", hint: 'Use fmt.Println(100) — no quotes for numbers!' },
+            { display: "256", expected: "256", hint: 'Use fmt.Println(256) — no quotes for numbers!' },
         ];
 
         const q2Pool = [
-            { text: "Print all numbers from 1 to 3, each on its own line:", expected: "1\n2\n3", check: c => c.includes("i <= 3") || c.includes("i < 4"), hint: 'Use: for i := 1; i <= 3; i++ { fmt.Println(i) }' },
-            { text: "Print all numbers from 1 to 5, each on its own line:", expected: "1\n2\n3\n4\n5", check: c => c.includes("i <= 5") || c.includes("i < 6"), hint: 'Use: for i := 1; i <= 5; i++ { fmt.Println(i) }' },
-            { text: "Print all numbers from 1 to 7, each on its own line:", expected: "1\n2\n3\n4\n5\n6\n7", check: c => c.includes("i <= 7") || c.includes("i < 8"), hint: 'Use: for i := 1; i <= 7; i++ { fmt.Println(i) }' },
-            { text: "Print all numbers from 1 to 10, each on its own line:", expected: "1\n2\n3\n4\n5\n6\n7\n8\n9\n10", check: c => c.includes("i <= 10") || c.includes("i < 11"), hint: 'Use: for i := 1; i <= 10; i++ { fmt.Println(i) }' },
+            { text: "Print all numbers from 1 to 3, each on its own line:", expected: "1\n2\n3", hint: 'for i := 1; i <= 3; i++ { fmt.Println(i) }' },
+            { text: "Print all numbers from 1 to 5, each on its own line:", expected: "1\n2\n3\n4\n5", hint: 'for i := 1; i <= 5; i++ { fmt.Println(i) }' },
+            { text: "Print all numbers from 1 to 7, each on its own line:", expected: "1\n2\n3\n4\n5\n6\n7", hint: 'for i := 1; i <= 7; i++ { fmt.Println(i) }' },
+            { text: "Print all numbers from 1 to 10, each on its own line:", expected: "1\n2\n3\n4\n5\n6\n7\n8\n9\n10", hint: 'for i := 1; i <= 10; i++ { fmt.Println(i) }' },
         ];
 
         const q3Pool = [
-            { text: "Print only the EVEN numbers from 1 to 10:", expected: "2\n4\n6\n8\n10", check: c => (c.includes("i <= 10") || c.includes("i < 11")) && c.includes("% 2 == 0"), hint: 'for loop 1 to 10, inside: if i % 2 == 0 { fmt.Println(i) }' },
-            { text: "Print only the ODD numbers from 1 to 10:", expected: "1\n3\n5\n7\n9", check: c => (c.includes("i <= 10") || c.includes("i < 11")) && c.includes("% 2 != 0"), hint: 'for loop 1 to 10, inside: if i % 2 != 0 { fmt.Println(i) }' },
-            { text: "Print only the EVEN numbers from 1 to 20:", expected: "2\n4\n6\n8\n10\n12\n14\n16\n18\n20", check: c => (c.includes("i <= 20") || c.includes("i < 21")) && c.includes("% 2 == 0"), hint: 'for loop 1 to 20, inside: if i % 2 == 0 { fmt.Println(i) }' },
-            { text: "Print only the ODD numbers from 1 to 20:", expected: "1\n3\n5\n7\n9\n11\n13\n15\n17\n19", check: c => (c.includes("i <= 20") || c.includes("i < 21")) && c.includes("% 2 != 0"), hint: 'for loop 1 to 20, inside: if i % 2 != 0 { fmt.Println(i) }' },
+            { text: "Print only the EVEN numbers from 1 to 10:", expected: "2\n4\n6\n8\n10", hint: 'for loop 1 to 10, inside: if i % 2 == 0 { fmt.Println(i) }' },
+            { text: "Print only the ODD numbers from 1 to 10:", expected: "1\n3\n5\n7\n9", hint: 'for loop 1 to 10, inside: if i % 2 != 0 { fmt.Println(i) }' },
+            { text: "Print only the EVEN numbers from 1 to 20:", expected: "2\n4\n6\n8\n10\n12\n14\n16\n18\n20", hint: 'for loop 1 to 20, inside: if i % 2 == 0 { fmt.Println(i) }' },
+            { text: "Print only the ODD numbers from 1 to 20:", expected: "1\n3\n5\n7\n9\n11\n13\n15\n17\n19", hint: 'for loop 1 to 20, inside: if i % 2 != 0 { fmt.Println(i) }' },
         ];
 
         const q4Pool = [
-            { text: "Print the result of 8 + 5:", expected: "13", check: c => c.includes("fmt.Println(8 + 5)") || c.includes("fmt.Println(13)"), hint: 'Use fmt.Println(8 + 5) — Go calculates it for you!' },
-            { text: "Print the result of 20 - 7:", expected: "13", check: c => c.includes("fmt.Println(20 - 7)") || c.includes("fmt.Println(13)"), hint: 'Use fmt.Println(20 - 7)' },
-            { text: "Print the result of 4 × 6:", expected: "24", check: c => c.includes("fmt.Println(4 * 6)") || c.includes("fmt.Println(24)"), hint: 'Use fmt.Println(4 * 6) — multiplication uses *' },
-            { text: "Print the result of 20 ÷ 4:", expected: "5", check: c => c.includes("fmt.Println(20 / 4)") || c.includes("fmt.Println(5)"), hint: 'Use fmt.Println(20 / 4) — division uses /' },
+            { text: "Print the result of 8 + 5:", expected: "13", hint: 'Use fmt.Println(8 + 5)' },
+            { text: "Print the result of 20 - 7:", expected: "13", hint: 'Use fmt.Println(20 - 7)' },
+            { text: "Print the result of 4 × 6:", expected: "24", hint: 'Use fmt.Println(4 * 6)' },
+            { text: "Print the result of 20 ÷ 4:", expected: "5", hint: 'Use fmt.Println(20 / 4)' },
         ];
 
         const q5Pool = [
-            { text: "Calculate and print the perimeter of a rectangle with width 3 and height 4:", expected: "14", answer: 14, hint: 'w := 3 \n h := 4 \n fmt.Println(2 * (w + h))' },
-            { text: "Calculate and print the perimeter of a rectangle with width 5 and height 7:", expected: "24", answer: 24, hint: 'w := 5 \n h := 7 \n fmt.Println(2 * (w + h))' },
-            { text: "Calculate and print the perimeter of a rectangle with width 6 and height 2:", expected: "16", answer: 16, hint: 'w := 6 \n h := 2 \n fmt.Println(2 * (w + h))' },
-            { text: "Calculate and print the perimeter of a rectangle with width 10 and height 3:", expected: "26", answer: 26, hint: 'w := 10 \n h := 3 \n fmt.Println(2 * (w + h))' },
+            { text: "Calculate and print the perimeter of a rectangle with width 3 and height 4:", expected: "14", hint: 'w := 3\nh := 4\nfmt.Println(2 * (w + h))' },
+            { text: "Calculate and print the perimeter of a rectangle with width 5 and height 7:", expected: "24", hint: 'w := 5\nh := 7\nfmt.Println(2 * (w + h))' },
+            { text: "Calculate and print the perimeter of a rectangle with width 6 and height 2:", expected: "16", hint: 'w := 6\nh := 2\nfmt.Println(2 * (w + h))' },
+            { text: "Calculate and print the perimeter of a rectangle with width 10 and height 3:", expected: "26", hint: 'w := 10\nh := 3\nfmt.Println(2 * (w + h))' },
         ];
 
         function pick(pool) { return pool[Math.floor(Math.random() * pool.length)]; }
@@ -849,7 +801,7 @@ func main() {
         document.getElementById("q5Expected").textContent = q5.expected;
         document.getElementById("hint5").textContent = q5.hint;
 
-        // ── Points ─────────────────────────────────────────
+        // Points
         let points = 0;
         let stepsCompleted = 0;
         let hintUsed = [false, false, false, false, false];
@@ -878,6 +830,11 @@ func main() {
             box.textContent = message;
         }
 
+        function setRunning(step, isRunning) {
+            document.getElementById("running" + step).style.display = isRunning ? "block" : "none";
+            document.getElementById("btn" + step).disabled = isRunning;
+        }
+
         function unlockStep(next) {
             setTimeout(() => {
                 const el = document.getElementById("step" + next);
@@ -900,65 +857,64 @@ func main() {
             }
         }
 
-        function checkStep1() {
-            const code = document.getElementById("code1").value;
-            if (q1.check(code)) {
-                updatePoints(10); updateProgress();
-                showResult(1, true, "✅ Correct! You printed " + q1.display + " and earned 10 points! Step 2 unlocking...");
-                unlockStep(2);
-            } else {
-                showResult(1, false, "❌ Not quite. Print the number " + q1.display + " — remember no quotes for numbers!");
+        // Piston API
+        async function runGoCode(code) {
+            const res = await fetch("https://emkc.org/api/v2/piston/execute", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    language: "go",
+                    version: "1.20.0",
+                    files: [{ content: code }]
+                })
+            });
+            return await res.json();
+        }
+
+        async function checkStep(stepNum, expected, isLast) {
+            const code = document.getElementById("code" + stepNum).value;
+            setRunning(stepNum, true);
+            try {
+                const result = await runGoCode(code);
+                const output = (result.run?.stdout || "").trim();
+                const stderr = (result.run?.stderr || "").trim();
+                setRunning(stepNum, false);
+
+                if (stderr) {
+                    showResult(stepNum, false, "❌ Your code has an error: " + stderr.split('\n')[0]);
+                    return;
+                }
+
+                const expectedClean = expected.replace(/\\n/g, "\n").trim();
+
+                if (output === expectedClean) {
+                    updatePoints(10); updateProgress();
+                    if (isLast) {
+                        document.getElementById("finalPoints").textContent = points;
+                        showResult(stepNum, true, "✅ Correct! Output: " + output + " — You earned 10 points!");
+                        launchConfetti();
+                        setTimeout(() => {
+                            document.getElementById("stageComplete").style.display = "block";
+                            document.getElementById("stageComplete").scrollIntoView({ behavior: "smooth" });
+                        }, 1200);
+                    } else {
+                        showResult(stepNum, true, "✅ Correct! Output: " + output.replace(/\n/g, ", ") + " — You earned 10 points! Next step unlocking...");
+                        unlockStep(stepNum + 1);
+                    }
+                } else {
+                    showResult(stepNum, false, '❌ Your output: "' + output.replace(/\n/g, ", ") + '" — Expected: "' + expectedClean.replace(/\n/g, ", ") + '"');
+                }
+            } catch (err) {
+                setRunning(stepNum, false);
+                showResult(stepNum, false, "❌ Could not connect to code runner. Check your internet and try again.");
             }
         }
 
-        function checkStep2() {
-            const code = document.getElementById("code2").value;
-            if (q2.check(code)) {
-                updatePoints(10); updateProgress();
-                showResult(2, true, "✅ Correct! Your loop works! You earned 10 points! Step 3 unlocking...");
-                unlockStep(3);
-            } else {
-                showResult(2, false, "❌ Not quite. Use a for loop — check the lesson above for the structure!");
-            }
-        }
-
-        function checkStep3() {
-            const code = document.getElementById("code3").value;
-            if (q3.check(code)) {
-                updatePoints(10); updateProgress();
-                showResult(3, true, "✅ Correct! You filtered numbers perfectly! You earned 10 points! Step 4 unlocking...");
-                unlockStep(4);
-            } else {
-                showResult(3, false, "❌ Not quite. Use a for loop and check i % 2 inside it!");
-            }
-        }
-
-        function checkStep4() {
-            const code = document.getElementById("code4").value;
-            if (q4.check(code)) {
-                updatePoints(10); updateProgress();
-                showResult(4, true, "✅ Correct! The calculation is right! You earned 10 points! Step 5 unlocking...");
-                unlockStep(5);
-            } else {
-                showResult(4, false, "❌ Not quite. Put the calculation directly inside fmt.Println()!");
-            }
-        }
-
-        function checkStep5() {
-            const code = document.getElementById("code5").value;
-            if (code.includes(String(q5.answer)) && (code.includes("2 *") || code.includes("2*"))) {
-                updatePoints(10); updateProgress();
-                document.getElementById("finalPoints").textContent = points;
-                showResult(5, true, "✅ Correct! Perimeter = " + q5.answer + "! You earned 10 points!");
-                launchConfetti();
-                setTimeout(() => {
-                    document.getElementById("stageComplete").style.display = "block";
-                    document.getElementById("stageComplete").scrollIntoView({ behavior: "smooth" });
-                }, 1200);
-            } else {
-                showResult(5, false, "❌ Not quite. Remember: perimeter = 2 * (width + height). Check your numbers!");
-            }
-        }
+        function checkStep1() { checkStep(1, q1.expected, false); }
+        function checkStep2() { checkStep(2, q2.expected, false); }
+        function checkStep3() { checkStep(3, q3.expected, false); }
+        function checkStep4() { checkStep(4, q4.expected, false); }
+        function checkStep5() { checkStep(5, q5.expected, true); }
     </script>
 </body>
 </html>

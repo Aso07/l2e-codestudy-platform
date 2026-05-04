@@ -51,421 +51,104 @@
             transition: background 0.3s, color 0.3s;
         }
 
-        #cursor {
-            width: 12px; height: 12px;
-            background: var(--accent);
-            border-radius: 50%;
-            position: fixed;
-            pointer-events: none;
-            z-index: 9999;
-            transition: transform 0.1s ease;
-            mix-blend-mode: screen;
-        }
-
+        #cursor { width: 12px; height: 12px; background: var(--accent); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9999; transition: transform 0.1s ease; mix-blend-mode: screen; }
         body.light #cursor { mix-blend-mode: multiply; }
+        #cursor-ring { width: 36px; height: 36px; border: 2px solid var(--accent); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9998; opacity: 0.4; transition: left 0.12s ease, top 0.12s ease, transform 0.2s ease; }
 
-        #cursor-ring {
-            width: 36px; height: 36px;
-            border: 2px solid var(--accent);
-            border-radius: 50%;
-            position: fixed;
-            pointer-events: none;
-            z-index: 9998;
-            opacity: 0.4;
-            transition: left 0.12s ease, top 0.12s ease, transform 0.2s ease;
-        }
+        .sidebar { width: 72px; background: var(--sidebar); border-right: 1px solid var(--border); display: flex; flex-direction: column; align-items: center; padding: 20px 0; gap: 8px; position: fixed; top: 0; left: 0; bottom: 0; z-index: 100; transition: background 0.3s, border-color 0.3s; }
 
-        .sidebar {
-            width: 72px;
-            background: var(--sidebar);
-            border-right: 1px solid var(--border);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px 0;
-            gap: 8px;
-            position: fixed;
-            top: 0; left: 0; bottom: 0;
-            z-index: 100;
-            transition: background 0.3s, border-color 0.3s;
-        }
-
-        .sidebar-logo {
-            width: 40px; height: 40px;
-            background: var(--accent);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Space Mono', monospace;
-            font-size: 13px;
-            font-weight: 700;
-            color: #000;
-            margin-bottom: 20px;
-            animation: pulse-logo 3s ease infinite;
-        }
+        .sidebar-logo { width: 40px; height: 40px; background: var(--accent); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-family: 'Space Mono', monospace; font-size: 13px; font-weight: 700; color: #000; margin-bottom: 20px; animation: pulse-logo 3s ease infinite; }
 
         @keyframes pulse-logo {
             0%, 100% { box-shadow: 0 0 0 0 rgba(245,158,11,0.4); }
             50% { box-shadow: 0 0 0 8px rgba(245,158,11,0); }
         }
 
-        .nav-item {
-            width: 48px; height: 48px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            cursor: none;
-            transition: background 0.2s, transform 0.2s;
-            position: relative;
-            text-decoration: none;
-            color: var(--muted);
-        }
+        .nav-item { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; cursor: none; transition: background 0.2s, transform 0.2s; position: relative; text-decoration: none; color: var(--muted); }
+        .nav-item:hover { background: rgba(245,158,11,0.1); color: var(--accent); transform: scale(1.1); }
+        .nav-item.active { background: rgba(245,158,11,0.15); color: var(--accent); }
 
-        .nav-item:hover {
-            background: rgba(245,158,11,0.1);
-            color: var(--accent);
-            transform: scale(1.1);
-        }
-
-        .nav-item.active {
-            background: rgba(245,158,11,0.15);
-            color: var(--accent);
-        }
-
-        .nav-item .tooltip {
-            position: absolute;
-            left: 60px;
-            background: var(--card);
-            color: var(--text);
-            padding: 6px 12px;
-            border-radius: 8px;
-            font-size: 12px;
-            white-space: nowrap;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.2s;
-            border: 1px solid var(--border);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        }
-
+        .nav-item .tooltip { position: absolute; left: 60px; background: var(--card); color: var(--text); padding: 6px 12px; border-radius: 8px; font-size: 12px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.2s; border: 1px solid var(--border); box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
         .nav-item:hover .tooltip { opacity: 1; }
-
         .sidebar-divider { width: 32px; height: 1px; background: var(--border); margin: 8px 0; }
+        .sidebar-bottom { margin-top: auto; display: flex; flex-direction: column; align-items: center; gap: 8px; padding-bottom: 8px; }
 
-        .sidebar-bottom {
-            margin-top: auto;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-            padding-bottom: 8px;
-        }
-
-        .settings-panel {
-            position: fixed;
-            left: 80px;
-            bottom: 20px;
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 16px;
-            width: 200px;
-            display: none;
-            z-index: 200;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-            animation: fadeUp 0.2s ease forwards;
-        }
-
+        .settings-panel { position: fixed; left: 80px; bottom: 20px; background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 16px; width: 200px; display: none; z-index: 200; box-shadow: 0 8px 32px rgba(0,0,0,0.3); }
         .settings-panel.open { display: block; }
         .settings-panel h4 { font-size: 12px; color: var(--muted); letter-spacing: 1px; margin-bottom: 12px; font-weight: 600; }
-
         .setting-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
         .setting-row span { font-size: 13px; color: var(--text); }
-
-        .toggle {
-            width: 40px; height: 22px;
-            background: var(--border);
-            border-radius: 20px;
-            position: relative;
-            cursor: none;
-            transition: background 0.2s;
-        }
-
+        .toggle { width: 40px; height: 22px; background: var(--border); border-radius: 20px; position: relative; cursor: none; transition: background 0.2s; }
         .toggle.on { background: var(--accent); }
-
-        .toggle::after {
-            content: '';
-            width: 16px; height: 16px;
-            background: white;
-            border-radius: 50%;
-            position: absolute;
-            top: 3px; left: 3px;
-            transition: left 0.2s;
-        }
-
+        .toggle::after { content: ''; width: 16px; height: 16px; background: white; border-radius: 50%; position: absolute; top: 3px; left: 3px; transition: left 0.2s; }
         .toggle.on::after { left: 21px; }
 
-        .main {
-            margin-left: 72px;
-            flex: 1;
-            padding: 24px;
-            max-width: 860px;
-            transition: background 0.3s;
-        }
+        .main { margin-left: 72px; flex: 1; padding: 24px; max-width: 860px; transition: background 0.3s; }
 
-        .points-bar {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 14px 20px;
-            margin-bottom: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            animation: fadeUp 0.4s ease forwards;
-            transition: background 0.3s, border-color 0.3s;
-        }
-
+        .points-bar { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 14px 20px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; transition: background 0.3s, border-color 0.3s; }
         .points-bar h2 { font-size: 16px; font-weight: 700; }
         .points-bar h2 span { color: var(--accent); }
         .points-display { font-family: 'Space Mono', monospace; font-size: 18px; font-weight: 700; color: var(--accent); }
 
         .progress-wrap { background: var(--card2); border-radius: 20px; height: 6px; margin-bottom: 24px; overflow: hidden; }
+        .progress-fill { background: var(--accent); height: 6px; border-radius: 20px; width: 0%; transition: width 0.6s ease; box-shadow: 0 0 10px rgba(245,158,11,0.5); }
 
-        .progress-fill {
-            background: var(--accent);
-            height: 6px;
-            border-radius: 20px;
-            width: 0%;
-            transition: width 0.6s ease;
-            box-shadow: 0 0 10px rgba(245,158,11,0.5);
-        }
-
-        .lesson-box {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-left: 4px solid var(--accent);
-            border-radius: 12px;
-            padding: 20px 24px;
-            margin-bottom: 20px;
-            animation: fadeUp 0.5s ease forwards;
-            transition: background 0.3s, border-color 0.3s;
-        }
-
+        .lesson-box { background: var(--card); border: 1px solid var(--border); border-left: 4px solid var(--accent); border-radius: 12px; padding: 20px 24px; margin-bottom: 20px; transition: background 0.3s, border-color 0.3s; }
         .lesson-box h2 { color: var(--accent); font-size: 15px; margin-bottom: 12px; font-weight: 700; }
         .lesson-box p { color: var(--muted); font-size: 14px; line-height: 1.7; margin-bottom: 10px; }
 
-        .lesson-box code, .step-lesson code {
-            background: rgba(245,158,11,0.1);
-            color: var(--accent);
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-family: 'Space Mono', monospace;
-            font-size: 13px;
-        }
+        .lesson-box code, .step-lesson code { background: rgba(245,158,11,0.1); color: var(--accent); padding: 2px 8px; border-radius: 4px; font-family: 'Space Mono', monospace; font-size: 13px; }
 
-        .lesson-box pre, .step-box pre, .step-lesson pre {
-            background: #010409;
-            border: 1px solid var(--border);
-            color: #f59e0b;
-            padding: 14px;
-            border-radius: 10px;
-            font-family: 'Space Mono', monospace;
-            font-size: 13px;
-            margin-top: 10px;
-            overflow-x: auto;
-            line-height: 1.6;
-        }
+        .lesson-box pre, .step-box pre, .step-lesson pre { background: #010409; border: 1px solid var(--border); color: #f59e0b; padding: 14px; border-radius: 10px; font-family: 'Space Mono', monospace; font-size: 13px; margin-top: 10px; overflow-x: auto; line-height: 1.6; }
+        body.light .lesson-box pre, body.light .step-box pre, body.light .step-lesson pre { background: #fffbeb; color: #b45309; }
 
-        body.light .lesson-box pre,
-        body.light .step-box pre,
-        body.light .step-lesson pre {
-            background: #fffbeb;
-            color: #b45309;
-        }
-
-        .step-box {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 24px;
-            margin-bottom: 16px;
-            display: none;
-            animation: fadeUp 0.5s ease forwards;
-            transition: background 0.3s, border-color 0.3s;
-        }
-
+        .step-box { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 24px; margin-bottom: 16px; display: none; animation: fadeUp 0.5s ease forwards; transition: background 0.3s, border-color 0.3s; }
         .step-box.active { display: block; }
         .step-header { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
-
-        .step-number {
-            background: rgba(245,158,11,0.15);
-            color: var(--accent);
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 700;
-            font-family: 'Space Mono', monospace;
-        }
-
+        .step-number { background: rgba(245,158,11,0.15); color: var(--accent); padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; font-family: 'Space Mono', monospace; }
         .random-badge { background: rgba(139,92,246,0.15); color: #a78bfa; padding: 4px 10px; border-radius: 20px; font-size: 11px; }
-
         .step-box h3 { font-size: 16px; font-weight: 700; margin-bottom: 14px; }
         .step-box p { color: var(--muted); font-size: 14px; line-height: 1.6; margin-bottom: 10px; }
 
-        .step-lesson {
-            background: rgba(245,158,11,0.04);
-            border: 1px solid rgba(245,158,11,0.15);
-            border-radius: 10px;
-            padding: 14px 16px;
-            margin-bottom: 16px;
-            font-size: 13px;
-            color: var(--muted);
-            line-height: 1.7;
-            transition: background 0.3s;
-        }
-
+        .step-lesson { background: rgba(245,158,11,0.04); border: 1px solid rgba(245,158,11,0.15); border-radius: 10px; padding: 14px 16px; margin-bottom: 16px; font-size: 13px; color: var(--muted); line-height: 1.7; }
         .step-lesson strong { color: var(--accent); }
 
-        textarea {
-            width: 100%;
-            height: 180px;
-            background: #010409;
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            color: #f59e0b;
-            font-family: 'Space Mono', monospace;
-            font-size: 13px;
-            padding: 14px;
-            margin: 10px 0;
-            resize: vertical;
-            outline: none;
-            transition: border-color 0.2s, background 0.3s;
-        }
-
+        textarea { width: 100%; height: 180px; background: #010409; border: 1px solid var(--border); border-radius: 10px; color: #f59e0b; font-family: 'Space Mono', monospace; font-size: 13px; padding: 14px; margin: 10px 0; resize: vertical; outline: none; transition: border-color 0.2s, background 0.3s; }
         body.light textarea { background: #fffbeb; color: #b45309; }
         textarea:focus { border-color: rgba(245,158,11,0.5); }
 
         .button-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 4px; }
 
-        .submit-btn {
-            background: var(--accent);
-            color: #000;
-            border: none;
-            padding: 10px 24px;
-            border-radius: 8px;
-            font-family: 'Syne', sans-serif;
-            font-size: 14px;
-            font-weight: 700;
-            cursor: none;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
+        .submit-btn { background: var(--accent); color: #000; border: none; padding: 10px 24px; border-radius: 8px; font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700; cursor: none; transition: transform 0.2s, box-shadow 0.2s; }
         .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(245,158,11,0.3); }
+        .submit-btn:disabled { opacity: 0.5; }
 
-        .hint-btn {
-            background: rgba(139,92,246,0.1);
-            color: #a78bfa;
-            border: 1px solid rgba(139,92,246,0.3);
-            padding: 10px 20px;
-            border-radius: 8px;
-            font-family: 'Syne', sans-serif;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: none;
-            transition: background 0.2s;
-        }
-
+        .hint-btn { background: rgba(139,92,246,0.1); color: #a78bfa; border: 1px solid rgba(139,92,246,0.3); padding: 10px 20px; border-radius: 8px; font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 600; cursor: none; transition: background 0.2s; }
         .hint-btn:hover { background: rgba(139,92,246,0.2); }
 
-        .hint-box {
-            background: rgba(139,92,246,0.05);
-            border: 1px solid rgba(139,92,246,0.3);
-            border-radius: 10px;
-            padding: 12px 16px;
-            margin-top: 12px;
-            display: none;
-            font-size: 13px;
-            color: #a78bfa;
-            font-family: 'Space Mono', monospace;
-        }
+        .hint-box { background: rgba(139,92,246,0.05); border: 1px solid rgba(139,92,246,0.3); border-radius: 10px; padding: 12px 16px; margin-top: 12px; display: none; font-size: 13px; color: #a78bfa; font-family: 'Space Mono', monospace; }
 
-        .result-box {
-            padding: 14px 18px;
-            border-radius: 10px;
-            margin-top: 12px;
-            display: none;
-            font-size: 14px;
-            font-weight: 600;
-            animation: fadeUp 0.3s ease forwards;
-        }
-
+        .result-box { padding: 14px 18px; border-radius: 10px; margin-top: 12px; display: none; font-size: 14px; font-weight: 600; }
         .success { background: var(--success); border: 1px solid var(--success-border); color: var(--success-text); }
         .error { background: var(--error); border: 1px solid var(--error-border); color: var(--error-text); }
 
-        .stage-complete {
-            background: linear-gradient(135deg, #3a2a0a, #201508);
-            border: 1px solid rgba(245,158,11,0.3);
-            border-radius: 16px;
-            padding: 40px;
-            text-align: center;
-            display: none;
-            animation: fadeUp 0.5s ease forwards;
-        }
+        .running-msg { padding: 14px 18px; border-radius: 10px; margin-top: 12px; font-size: 14px; color: var(--muted); font-family: 'Space Mono', monospace; display: none; border: 1px solid var(--border); }
 
+        .stage-complete { background: linear-gradient(135deg, #3a2a0a, #201508); border: 1px solid rgba(245,158,11,0.3); border-radius: 16px; padding: 40px; text-align: center; display: none; animation: fadeUp 0.5s ease forwards; }
         body.light .stage-complete { background: linear-gradient(135deg, #fef3c7, #fffbeb); border-color: rgba(245,158,11,0.4); }
-
         .stage-complete h2 { font-size: 32px; font-weight: 800; color: var(--accent); margin-bottom: 10px; }
         .stage-complete p { color: var(--muted); margin-bottom: 6px; }
         .stage-complete strong { color: var(--text); font-size: 18px; }
 
         .complete-buttons { display: flex; gap: 12px; justify-content: center; margin-top: 20px; flex-wrap: wrap; }
 
-        .next-btn {
-            background: var(--accent);
-            color: #000;
-            border: none;
-            padding: 14px 32px;
-            border-radius: 10px;
-            font-family: 'Syne', sans-serif;
-            font-size: 15px;
-            font-weight: 700;
-            cursor: none;
-            transition: transform 0.2s, box-shadow 0.2s;
-            display: inline-block;
-            text-decoration: none;
-        }
-
+        .next-btn { background: var(--accent); color: #000; border: none; padding: 14px 32px; border-radius: 10px; font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700; cursor: none; transition: transform 0.2s, box-shadow 0.2s; display: inline-block; text-decoration: none; }
         .next-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(245,158,11,0.3); }
 
-        .home-btn {
-            background: transparent;
-            color: var(--muted);
-            border: 1px solid var(--border);
-            padding: 14px 32px;
-            border-radius: 10px;
-            font-family: 'Syne', sans-serif;
-            font-size: 15px;
-            font-weight: 700;
-            cursor: none;
-            transition: background 0.2s, color 0.2s;
-            display: inline-block;
-            text-decoration: none;
-        }
-
+        .home-btn { background: transparent; color: var(--muted); border: 1px solid var(--border); padding: 14px 32px; border-radius: 10px; font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700; cursor: none; transition: background 0.2s, color 0.2s; display: inline-block; text-decoration: none; }
         .home-btn:hover { background: var(--card2); color: var(--text); }
 
-        .confetti-piece {
-            position: fixed;
-            width: 8px; height: 8px;
-            border-radius: 2px;
-            pointer-events: none;
-            z-index: 9999;
-            animation: confettiFall linear forwards;
-        }
+        .confetti-piece { position: fixed; width: 8px; height: 8px; border-radius: 2px; pointer-events: none; z-index: 9999; animation: confettiFall linear forwards; }
 
         @keyframes confettiFall {
             0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
@@ -493,7 +176,7 @@
         <a href="/challenge.html" class="nav-item">⭐<span class="tooltip">Stage 1</span></a>
         <a href="/stage2.html" class="nav-item">🔢<span class="tooltip">Stage 2</span></a>
         <a href="/stage3.html" class="nav-item active">📝<span class="tooltip">Stage 3</span></a>
-        <a href="/stage4.html" class="nav-item">🔧<span class="tooltip">Stage 4</span></a>
+        <a href="/stage4.html" class="nav-item">🧩<span class="tooltip">Stage 4</span></a>
         <div class="sidebar-divider"></div>
         <a href="/leaderboard.html" class="nav-item">🏆<span class="tooltip">Leaderboard</span></a>
         <div class="sidebar-bottom">
@@ -525,15 +208,12 @@
         <div class="lesson-box">
             <h2>📖 Lesson: Working with Strings in Go</h2>
             <p>A <strong>string</strong> in Go is any text wrapped in double quotes. You can do many useful things with strings:</p>
-            <pre>// Get the length of a string
-fmt.Println(len("hello"))    // prints: 5
+            <pre>fmt.Println(len("hello"))    // prints: 5
 
-// Loop through each character
 for _, ch := range "hello" {
     fmt.Println(string(ch))
 }
 
-// Check if a string contains something
 import "strings"
 fmt.Println(strings.Contains("hello", "ell"))  // prints: true</pre>
             <p>The <code>len()</code> function counts characters. The <code>range</code> keyword loops through each one.</p>
@@ -561,9 +241,10 @@ func main() {
     // Write your code here
 }</textarea>
             <div class="button-row">
-                <button class="submit-btn" onclick="checkStep1()">▶ Submit</button>
+                <button class="submit-btn" id="btn1" onclick="checkStep1()">▶ Run & Submit</button>
                 <button class="hint-btn" onclick="showHint(1)">💡 Hint (-5 pts)</button>
             </div>
+            <div class="running-msg" id="running1">⏳ Running your code...</div>
             <div class="hint-box" id="hint1"></div>
             <div class="result-box" id="result1"></div>
         </div>
@@ -596,9 +277,10 @@ func main() {
     // Write your code here
 }</textarea>
             <div class="button-row">
-                <button class="submit-btn" onclick="checkStep2()">▶ Submit</button>
+                <button class="submit-btn" id="btn2" onclick="checkStep2()">▶ Run & Submit</button>
                 <button class="hint-btn" onclick="showHint(2)">💡 Hint (-5 pts)</button>
             </div>
+            <div class="running-msg" id="running2">⏳ Running your code...</div>
             <div class="hint-box" id="hint2"></div>
             <div class="result-box" id="result2"></div>
         </div>
@@ -615,7 +297,7 @@ func main() {
                 <pre>import "strings"
 result := strings.Contains("hello", "e")
 fmt.Println(result)  // prints: true</pre>
-                It prints <code>true</code> if found and <code>false</code> if not found.
+                Prints <code>true</code> if found and <code>false</code> if not!
             </div>
             <p id="q3Text">Your task will appear here.</p>
             <pre id="q3Expected">?</pre>
@@ -630,9 +312,10 @@ func main() {
     // Write your code here
 }</textarea>
             <div class="button-row">
-                <button class="submit-btn" onclick="checkStep3()">▶ Submit</button>
+                <button class="submit-btn" id="btn3" onclick="checkStep3()">▶ Run & Submit</button>
                 <button class="hint-btn" onclick="showHint(3)">💡 Hint (-5 pts)</button>
             </div>
+            <div class="running-msg" id="running3">⏳ Running your code...</div>
             <div class="hint-box" id="hint3"></div>
             <div class="result-box" id="result3"></div>
         </div>
@@ -645,7 +328,7 @@ func main() {
             </div>
             <h3>Print the first word of a sentence</h3>
             <div class="step-lesson">
-                <strong>📖 How to do this:</strong> <code>strings.Fields()</code> splits a sentence into words. Use <code>[0]</code> to get the first one:
+                <strong>📖 How to do this:</strong> <code>strings.Fields()</code> splits a sentence into words. Use <code>[0]</code> to get the first:
                 <pre>import "strings"
 words := strings.Fields("hello world")
 fmt.Println(words[0])  // prints: hello</pre>
@@ -664,9 +347,10 @@ func main() {
     // Write your code here
 }</textarea>
             <div class="button-row">
-                <button class="submit-btn" onclick="checkStep4()">▶ Submit</button>
+                <button class="submit-btn" id="btn4" onclick="checkStep4()">▶ Run & Submit</button>
                 <button class="hint-btn" onclick="showHint(4)">💡 Hint (-5 pts)</button>
             </div>
+            <div class="running-msg" id="running4">⏳ Running your code...</div>
             <div class="hint-box" id="hint4"></div>
             <div class="result-box" id="result4"></div>
         </div>
@@ -699,9 +383,10 @@ func main() {
     // Write your code here
 }</textarea>
             <div class="button-row">
-                <button class="submit-btn" onclick="checkStep5()">▶ Submit</button>
+                <button class="submit-btn" id="btn5" onclick="checkStep5()">▶ Run & Submit</button>
                 <button class="hint-btn" onclick="showHint(5)">💡 Hint (-5 pts)</button>
             </div>
+            <div class="running-msg" id="running5">⏳ Running your code...</div>
             <div class="hint-box" id="hint5"></div>
             <div class="result-box" id="result5"></div>
         </div>
@@ -773,31 +458,31 @@ func main() {
         ];
 
         const q2Pool = [
-            { text: 'Count how many times "l" appears in "hello world". Print the count:', expected: "3", str: "hello world", ch: "l", count: 3, hint: "Loop through the string and count every time ch == 'l'" },
-            { text: 'Count how many times "o" appears in "Otukpo campus". Print the count:', expected: "1", str: "Otukpo campus", ch: "o", count: 1, hint: "Loop through and count every time ch == 'o' (lowercase!)" },
-            { text: 'Count how many times "a" appears in "abracadabra". Print the count:', expected: "5", str: "abracadabra", ch: "a", count: 5, hint: "Loop through and count every time ch == 'a'" },
-            { text: 'Count how many times "s" appears in "mississippi". Print the count:', expected: "4", str: "mississippi", ch: "s", count: 4, hint: "Loop through and count every time ch == 's'" },
+            { text: 'Count how many times "l" appears in "hello world". Print the count:', expected: "3", hint: "Loop through the string and count every time ch == 'l'" },
+            { text: 'Count how many times "o" appears in "Otukpo campus". Print the count:', expected: "1", hint: "Loop through and count every time ch == 'o' (lowercase!)" },
+            { text: 'Count how many times "a" appears in "abracadabra". Print the count:', expected: "5", hint: "Loop through and count every time ch == 'a'" },
+            { text: 'Count how many times "s" appears in "mississippi". Print the count:', expected: "4", hint: "Loop through and count every time ch == 's'" },
         ];
 
         const q3Pool = [
-            { text: 'Does "hello" contain the letter "e"? Print true or false:', expected: "true", str: "hello", ch: "e", hint: 'Use fmt.Println(strings.Contains("hello", "e"))' },
-            { text: 'Does "golang" contain the letter "x"? Print true or false:', expected: "false", str: "golang", ch: "x", hint: 'Use fmt.Println(strings.Contains("golang", "x"))' },
-            { text: 'Does "Otukpo" contain the letter "k"? Print true or false:', expected: "true", str: "Otukpo", ch: "k", hint: 'Use fmt.Println(strings.Contains("Otukpo", "k"))' },
-            { text: 'Does "campus" contain the letter "z"? Print true or false:', expected: "false", str: "campus", ch: "z", hint: 'Use fmt.Println(strings.Contains("campus", "z"))' },
+            { text: 'Does "hello" contain the letter "e"? Print true or false:', expected: "true", hint: 'Use fmt.Println(strings.Contains("hello", "e"))' },
+            { text: 'Does "golang" contain the letter "x"? Print true or false:', expected: "false", hint: 'Use fmt.Println(strings.Contains("golang", "x"))' },
+            { text: 'Does "Otukpo" contain the letter "k"? Print true or false:', expected: "true", hint: 'Use fmt.Println(strings.Contains("Otukpo", "k"))' },
+            { text: 'Does "campus" contain the letter "z"? Print true or false:', expected: "false", hint: 'Use fmt.Println(strings.Contains("campus", "z"))' },
         ];
 
         const q4Pool = [
-            { text: 'Print the first word of: "hello world"', expected: "hello", sentence: "hello world", hint: 'Use strings.Fields("hello world")[0]' },
-            { text: 'Print the first word of: "Go is fun"', expected: "Go", sentence: "Go is fun", hint: 'Use strings.Fields("Go is fun")[0]' },
-            { text: 'Print the first word of: "Learn to earn"', expected: "Learn", sentence: "Learn to earn", hint: 'Use strings.Fields("Learn to earn")[0]' },
-            { text: 'Print the first word of: "Otukpo campus rocks"', expected: "Otukpo", sentence: "Otukpo campus rocks", hint: 'Use strings.Fields("Otukpo campus rocks")[0]' },
+            { text: 'Print the first word of: "hello world"', expected: "hello", hint: 'Use strings.Fields("hello world")[0]' },
+            { text: 'Print the first word of: "Go is fun"', expected: "Go", hint: 'Use strings.Fields("Go is fun")[0]' },
+            { text: 'Print the first word of: "Learn to earn"', expected: "Learn", hint: 'Use strings.Fields("Learn to earn")[0]' },
+            { text: 'Print the first word of: "Otukpo campus rocks"', expected: "Otukpo", hint: 'Use strings.Fields("Otukpo campus rocks")[0]' },
         ];
 
         const q5Pool = [
-            { text: 'Does "abc123" contain a number? Print true or false:', expected: "true", str: "abc123", hint: "Loop through and check if ch >= '0' && ch <= '9'" },
-            { text: 'Does "hello" contain a number? Print true or false:', expected: "false", str: "hello", hint: "Loop through and check if ch >= '0' && ch <= '9'" },
-            { text: 'Does "L2E2024" contain a number? Print true or false:', expected: "true", str: "L2E2024", hint: "Loop through and check if ch >= '0' && ch <= '9'" },
-            { text: 'Does "otukpo" contain a number? Print true or false:', expected: "false", str: "otukpo", hint: "Loop through and check if ch >= '0' && ch <= '9'" },
+            { text: 'Does "abc123" contain a number? Print true or false:', expected: "true", hint: "Loop through and check if ch >= '0' && ch <= '9'" },
+            { text: 'Does "hello" contain a number? Print true or false:', expected: "false", hint: "Loop through and check if ch >= '0' && ch <= '9'" },
+            { text: 'Does "L2E2024" contain a number? Print true or false:', expected: "true", hint: "Loop through and check if ch >= '0' && ch <= '9'" },
+            { text: 'Does "otukpo" contain a number? Print true or false:', expected: "false", hint: "Loop through and check if ch >= '0' && ch <= '9'" },
         ];
 
         function pick(pool) { return pool[Math.floor(Math.random() * pool.length)]; }
@@ -853,6 +538,11 @@ func main() {
             box.textContent = message;
         }
 
+        function setRunning(step, isRunning) {
+            document.getElementById("running" + step).style.display = isRunning ? "block" : "none";
+            document.getElementById("btn" + step).disabled = isRunning;
+        }
+
         function unlockStep(next) {
             setTimeout(() => {
                 const el = document.getElementById("step" + next);
@@ -875,65 +565,62 @@ func main() {
             }
         }
 
-        function checkStep1() {
-            const code = document.getElementById("code1").value;
-            if (code.includes('len("' + q1.word + '")')) {
-                updatePoints(10); updateProgress();
-                showResult(1, true, '✅ Correct! The length of "' + q1.word + '" is ' + q1.expected + '. You earned 10 points! Step 2 unlocking...');
-                unlockStep(2);
-            } else {
-                showResult(1, false, '❌ Not quite. Use len() with your assigned word inside quotes.');
+        // Piston API
+        async function runGoCode(code) {
+            const res = await fetch("https://emkc.org/api/v2/piston/execute", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    language: "go",
+                    version: "1.20.0",
+                    files: [{ content: code }]
+                })
+            });
+            return await res.json();
+        }
+
+        async function checkStep(stepNum, expected, isLast) {
+            const code = document.getElementById("code" + stepNum).value;
+            setRunning(stepNum, true);
+            try {
+                const result = await runGoCode(code);
+                const output = (result.run?.stdout || "").trim();
+                const stderr = (result.run?.stderr || "").trim();
+                setRunning(stepNum, false);
+
+                if (stderr) {
+                    showResult(stepNum, false, "❌ Your code has an error: " + stderr.split('\n')[0]);
+                    return;
+                }
+
+                if (output === expected.trim()) {
+                    updatePoints(10); updateProgress();
+                    if (isLast) {
+                        document.getElementById("finalPoints").textContent = points;
+                        showResult(stepNum, true, "✅ Correct! Output: " + output + " — You earned 10 points!");
+                        launchConfetti();
+                        setTimeout(() => {
+                            document.getElementById("stageComplete").style.display = "block";
+                            document.getElementById("stageComplete").scrollIntoView({ behavior: "smooth" });
+                        }, 1200);
+                    } else {
+                        showResult(stepNum, true, "✅ Correct! Output: " + output + " — You earned 10 points! Next step unlocking...");
+                        unlockStep(stepNum + 1);
+                    }
+                } else {
+                    showResult(stepNum, false, '❌ Your output: "' + output + '" — Expected: "' + expected.trim() + '"');
+                }
+            } catch (err) {
+                setRunning(stepNum, false);
+                showResult(stepNum, false, "❌ Could not connect to code runner. Check your internet and try again.");
             }
         }
 
-        function checkStep2() {
-            const code = document.getElementById("code2").value;
-            if (code.includes(q2.count) && code.includes("range") && code.includes("count")) {
-                updatePoints(10); updateProgress();
-                showResult(2, true, '✅ Correct! "' + q2.ch + '" appears ' + q2.count + ' times. You earned 10 points! Step 3 unlocking...');
-                unlockStep(3);
-            } else {
-                showResult(2, false, '❌ Not quite. Use a for range loop and a count variable. Check the lesson above!');
-            }
-        }
-
-        function checkStep3() {
-            const code = document.getElementById("code3").value;
-            if (code.includes('strings.Contains("' + q3.str + '", "' + q3.ch + '")')) {
-                updatePoints(10); updateProgress();
-                showResult(3, true, '✅ Correct! The answer is ' + q3.expected + '. You earned 10 points! Step 4 unlocking...');
-                unlockStep(4);
-            } else {
-                showResult(3, false, '❌ Not quite. Use strings.Contains() with your assigned string and letter.');
-            }
-        }
-
-        function checkStep4() {
-            const code = document.getElementById("code4").value;
-            if (code.includes('strings.Fields("' + q4.sentence + '")') && code.includes("[0]")) {
-                updatePoints(10); updateProgress();
-                showResult(4, true, '✅ Correct! The first word is "' + q4.expected + '". You earned 10 points! Step 5 unlocking...');
-                unlockStep(5);
-            } else {
-                showResult(4, false, '❌ Not quite. Use strings.Fields() with your sentence then add [0] to get the first word.');
-            }
-        }
-
-        function checkStep5() {
-            const code = document.getElementById("code5").value;
-            if (code.includes("range") && code.includes("'0'") && code.includes("'9'")) {
-                updatePoints(10); updateProgress();
-                document.getElementById("finalPoints").textContent = points;
-                showResult(5, true, '✅ Correct! The answer is ' + q5.expected + '. You earned 10 points!');
-                launchConfetti();
-                setTimeout(() => {
-                    document.getElementById("stageComplete").style.display = "block";
-                    document.getElementById("stageComplete").scrollIntoView({ behavior: "smooth" });
-                }, 1200);
-            } else {
-                showResult(5, false, "❌ Not quite. Loop through the string and check each character against '0' and '9'.");
-            }
-        }
+        function checkStep1() { checkStep(1, q1.expected, false); }
+        function checkStep2() { checkStep(2, q2.expected, false); }
+        function checkStep3() { checkStep(3, q3.expected, false); }
+        function checkStep4() { checkStep(4, q4.expected, false); }
+        function checkStep5() { checkStep(5, q5.expected, true); }
     </script>
 </body>
 </html>
